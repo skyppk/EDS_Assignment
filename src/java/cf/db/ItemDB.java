@@ -245,6 +245,44 @@ public class ItemDB {
         return items;
     }
     
+    public ArrayList<ItemInfo> selectItemByCategory(String category){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        try{
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE category = ? item_status = 'AVAILABLE';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, category);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while(rs.next()){
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex){
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return items;
+    }
+    
     public boolean checkItemId(String itemId){
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
