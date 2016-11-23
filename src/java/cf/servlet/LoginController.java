@@ -5,7 +5,9 @@
  */
 package cf.servlet;
 
+import cf.bean.StaffInfo;
 import cf.bean.UserInfo;
+import cf.db.StaffDB;
 import cf.db.UserDB;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private UserDB userDb;
+    private StaffDB staffDb;
 
     @Override
     public void init() throws ServletException {
@@ -31,13 +34,9 @@ public class LoginController extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         
         userDb = new UserDB(dbUrl, dbUser, dbPassword);
+        staffDb = new StaffDB(dbUrl, dbUser, dbPassword);
     }
     
-    
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,11 +63,19 @@ public class LoginController extends HttpServlet {
             HttpSession session = req.getSession(true);
             UserInfo user = new UserInfo();
             user = userDb.getUserInfo(username, password);
-            
+            session.setAttribute("accountType", user.getAccountType());
             session.setAttribute("userInfo", user);
             targetURL = "/index.jsp";
-        } else {
-            targetURL = "/index.jsp"; //TODO
+        }else if(this.staffDb.isValidUser(username, password)){
+            HttpSession session = req.getSession(true);
+            StaffInfo staff = new StaffInfo();
+            staff = staffDb.getStaffInfo(username, password);
+            session.setAttribute("accountType", staff.getAccountType());
+            session.setAttribute("staffInfo", staff);
+            targetURL = "/index.jsp";
+        }
+        else {
+            targetURL = "/login.jsp"; //TODO
         }
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
@@ -95,6 +102,7 @@ public class LoginController extends HttpServlet {
         HttpSession session = req.getSession(false);
         if(session != null){
             session.removeAttribute("userInfo");
+            session.removeAttribute("accountType");
             session.invalidate();
         }
         doLogin(req, resp);

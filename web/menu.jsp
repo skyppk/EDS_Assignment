@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<jsp:useBean id="userInfo" class="cf.bean.UserInfo" scope="session" />
+<jsp:useBean id="accountType" class="java.lang.String" scope="session" />
+<jsp:useBean id="userInfo" class="cf.bean.UserInfo" scope="session"/>
+<jsp:useBean id="staffInfo" class="cf.bean.StaffInfo" scope="session"/>
 
 <style>
     .nav a {
@@ -27,21 +29,21 @@
     }
 </style>
 
-<%
-            if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {
+        <%      
+            if (accountType == null || accountType.equals("")) {
         %>
         <jsp:include page="customerMenu.jsp">
             <jsp:param name="login" value="false" />
         </jsp:include>
         <%
-        } else if (userInfo.getAccountType().equalsIgnoreCase("CUSTOMER")) {
+        } else if (accountType.equalsIgnoreCase("CUSTOMER") ) {
         %>
         <jsp:include page="customerMenu.jsp">
             <jsp:param name="login" value="true" />
             
         </jsp:include>
         <%
-        } else if (userInfo.getAccountType().equalsIgnoreCase("ADMIN")) {
+        } else if (!accountType.equalsIgnoreCase("CUSTOMER")) {
         %>
         <jsp:include page="adminMenu.jsp" />
         <% }%>

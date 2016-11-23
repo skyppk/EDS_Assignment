@@ -391,7 +391,7 @@ public class UserDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while (!rs.next()) {
+            while (rs.next()) {
                 user = new UserInfo();
                 user.setId(rs.getInt("id"));
                 user.setLoginId(rs.getString("login_id"));
@@ -407,6 +407,48 @@ public class UserDB {
                 user.setMoney(rs.getDouble("money"));
                 user.setCreditAmount(rs.getInt("credit_amount"));
                 user.setBonusPoints(rs.getDouble("bonus_point"));
+                customers.add(user);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return customers;
+    }
+    
+    public ArrayList<UserInfo> selectNewUser() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        UserInfo user = null;
+        ArrayList<UserInfo> customers = new ArrayList();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM UserInfo WHERE user_status = 'NEW'";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                user = new UserInfo();
+                user.setId(rs.getInt("id"));
+                user.setLoginId("");
+                user.setPassword("");
+                user.setLastName(rs.getString("last_name"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setSex(rs.getString("sex"));
+                user.setBirthday(rs.getString("birthday"));
+                user.setTel(rs.getString("tel"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setUserStatus(rs.getString("user_status"));
+                user.setMoney(0);
+                user.setCreditAmount(0);
+                user.setBonusPoints(0);
                 customers.add(user);
             }
             pStmnt.close();

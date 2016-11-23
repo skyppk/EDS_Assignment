@@ -75,13 +75,47 @@ public class StaffDB {
         }
     }
     
+    public boolean addStaffInfo(String loginId,String password,String lastName, String firstName,String sex, String tel, String email, String position, String accountType) {
+        Connection cnnct = null;
+        Statement stmt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            cnnct.setAutoCommit(false);
+            stmt = cnnct.createStatement();
+            stmt.addBatch("INSERT INTO StaffInfo VALUES ( null,'" + loginId + "','" + lastName + "','" + firstName + "','" + sex + "','" + tel + "','" + email + "','" + position + "')");
+            stmt.addBatch("INSERT INTO AccountInfo VALUES ( '" + loginId + "','" + password + "',DEFAULT,DEFAULT,DEFAULT,'" + accountType + "')");
+            int counts[] = stmt.executeBatch();
+            cnnct.commit();
+            System.out.println("Staff " + counts.length);
+            stmt.close();
+            cnnct.close();
+            isSuccess = true;
+        } catch (SQLException ex) {
+            if(cnnct != null){
+                try{
+                    cnnct.rollback();
+                }catch(SQLException ex1){
+                    ex1.printStackTrace();
+                }
+            }
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
     public boolean isValidUser(String longinId, String pwd) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isValid = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM StaffInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id WHERE login_id = ? AND password = ? AND account_type != 'CUSTOMER';";
+            String preQueryStatement = "SELECT * FROM StaffInfo INNER JOIN AccountInfo ON StaffInfo.login_id = AccountInfo.login_id WHERE AccountInfo.login_id = ? AND password = ? AND NOT account_type = 'CUSTOMER';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, longinId);
             pStmnt.setString(2, pwd);
@@ -110,7 +144,7 @@ public class StaffDB {
         StaffInfo staff = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM StaffInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id WHERE login_id = ? AND password = ? AND account_type != 'CUSTOMER';";
+            String preQueryStatement = "SELECT id,AccountInfo.login_id AS login_id,password,last_name,first_name,sex,tel,email,position,account_type FROM StaffInfo INNER JOIN AccountInfo ON StaffInfo.login_id = AccountInfo.login_id WHERE AccountInfo.login_id = ? AND password = ? AND NOT account_type = 'CUSTOMER';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, longinId);
             pStmnt.setString(2, pwd);
@@ -127,6 +161,7 @@ public class StaffDB {
                 staff.setTel(rs.getString("tel"));
                 staff.setEmail(rs.getString("email"));
                 staff.setPosition(rs.getString("position"));
+                staff.setAccountType(rs.getString("account_type"));
             }
             pStmnt.close();
             cnnct.close();

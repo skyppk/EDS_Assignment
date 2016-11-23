@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="accountType" class="java.lang.String" scope="session" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,16 @@
         <title>C & F</title>
     </head>
     <body>
+        <%      
+            if (accountType == null || accountType.equals("")||accountType.equalsIgnoreCase("CUSTOMER")) {
+        %>
         <jsp:forward page="product?action=all" />
+        <%
+        } else if (!accountType.equalsIgnoreCase("CUSTOMER") ) {
+        %>
+        <jsp:forward page="handleCustomer?action=listNew" />
+        <%
+        }
+        %>
     </body>
 </html>

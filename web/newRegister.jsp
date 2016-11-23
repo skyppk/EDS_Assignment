@@ -1,6 +1,6 @@
 <%-- 
-    Document   : manageCustomer
-    Created on : 2016/11/23, 下午 11:35:14
+    Document   : newRegister
+    Created on : 2016/11/24, 上午 07:36:19
     Author     : apple
 --%>
 
@@ -8,22 +8,21 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="cf.bean.UserInfo"%>
 <%@taglib uri="/WEB-INF/tlds/manageCustomer" prefix="managecustomer" %>
-<jsp:useBean id="allUsers" class="java.util.ArrayList<UserInfo>" scope="request"/>
-
+<jsp:useBean id="newRegister" class="java.util.ArrayList<UserInfo>" scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Customer</title>
+        <title>New Register</title>
     </head>
     <body>
         <%@include file="menu.jsp" %>
         <div class="container">
-            <h2>Manage Customer</h2>
+            <h2>New Register</h2>
             <div class="panel panel-default">
                 <!--<div class="panel-body">-->
                 
-                <managecustomer:showCust customers="<%=allUsers%>"/>
+                <managecustomer:showCust customers="<%=newRegister%>"/>
                 <!--</div>-->
             </div>
         </div>
