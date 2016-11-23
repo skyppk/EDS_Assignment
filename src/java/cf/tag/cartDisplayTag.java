@@ -52,15 +52,15 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
                     out.println(item.getItemName());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("$ " + item.getDetailsPrice());
+                    out.println("$ " + item.getBuyPrice());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(item.getQuantity());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("$ " + item.getBuyPrice());
+                    out.println("$ " + item.getDetailsPrice());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
                     out.println("</td></tr>");
-                    total += item.getBuyPrice();
+                    total += item.getDetailsPrice();
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
 //                out.println("<div class=\"caption\">");
