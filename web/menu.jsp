@@ -65,7 +65,7 @@
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>-->
             <ul class="nav navbar-nav navbar-right">
-                <div class="input-group" style="max-width: 250px;">
+<!--                <div class="input-group" style="max-width: 250px;">
                     <div class="input-group-btn search-panel">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span id="search_concept">Filter by</span> <span class="caret"></span>
@@ -84,7 +84,7 @@
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
-                </div>
+                </div>-->
                 <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>            
                     <% if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {%>
 
@@ -119,9 +119,9 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="">Dress</a></li>
-            <li><a href="">Jacket</a></li>
-            <li><a href="">Redeeming Gift</a></li>
+            <li><a href="product?action=Dress">Dresses</a></li>
+            <li><a href="product?action=Jacket">Jackets</a></li>
+            <li><a href="product?action=Accessories">Accessories</a></li>
             <li><a href="">Contact Us</a></li>
         </ul>
     </div>
