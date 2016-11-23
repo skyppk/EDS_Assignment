@@ -8,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <jsp:useBean id="userInfo" class="cf.bean.UserInfo" scope="session" />
+
 <style>
     .nav a {
         color: #5a5a5a;
@@ -65,33 +66,37 @@
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>-->
             <ul class="nav navbar-nav navbar-right">
-<!--                <div class="input-group" style="max-width: 250px;">
-                    <div class="input-group-btn search-panel">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="search_concept">Filter by</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#contains">Dress</a></li>
-                            <li><a href="#its_equal">Jacket</a></li>
-                            <li><a href="#greather_than">Greather than ></a></li>
-                            <li><a href="#less_than">Less than < </a></li>
-                            <li class="divider"></li>
-                            <li><a href="#all">Anything</a></li>
-                        </ul>
-                    </div>
-                    <input type="hidden" name="search_param" value="all" id="search_param">         
-                    <input type="text" class="form-control" name="x" placeholder="Search term...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>-->
-                <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>            
-                    <% if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {%>
+                <!--                <div class="input-group" style="max-width: 250px;">
+                                    <div class="input-group-btn search-panel">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span id="search_concept">Filter by</span> <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#contains">Dress</a></li>
+                                            <li><a href="#its_equal">Jacket</a></li>
+                                            <li><a href="#greather_than">Greather than ></a></li>
+                                            <li><a href="#less_than">Less than < </a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#all">Anything</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" name="search_param" value="all" id="search_param">         
+                                    <input type="text" class="form-control" name="x" placeholder="Search term...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                    </span>
+                                </div>-->
+                <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
 
+                <% if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {
+                System.out.print("AAAAA"+userInfo.getFirstName());
+                %>
+                
                 <li><a href="registration.jsp"><span class="glyphicon glyphicon-user"></span> Registration</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <% } else {%>
-
+                    <% } else {
+                    System.out.print("BBBBB"+userInfo.getFirstName());%>
+                
                 <li><a href="#">Welcome, <%=userInfo.getFirstName()%></a></li>
                 <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
                 <li>

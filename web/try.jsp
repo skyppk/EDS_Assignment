@@ -37,15 +37,34 @@
                         </a>
                     </div>
                 </div>
-                            <div>
-                                <%=ui.getLoginId()%>
-                                <%=ui.getAddress()%>
-                            </div>
+                <div>
+                    <%=ui.getLoginId()%>
+                    <%=ui.getAddress()%>
+                </div>
                 <%
                         }
                     }
                 %>
             </div>
         </div>
+
+        <%
+            if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {
+        %>
+        <jsp:include page="customerMenu.jsp">
+            <jsp:param name="login" value="false" />
+        </jsp:include>
+        <%
+        } else if (userInfo.getAccountType().equalsIgnoreCase("CUSTOMER")) {
+        %>
+        <jsp:include page="customerMenu.jsp">
+            <jsp:param name="login" value="true" />
+            
+        </jsp:include>
+        <%
+        } else if (userInfo.getAccountType().equalsIgnoreCase("ADMIN")) {
+        %>
+        <jsp:include page="adminMenu.jsp" />
+        <% }%>
     </body>
 </html>

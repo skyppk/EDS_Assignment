@@ -37,6 +37,7 @@ public class cartDisplayTag extends SimpleTagSupport {
             JspWriter out = pageContext.getOut();
             DecimalFormat df = new DecimalFormat("$ #,##0.00");
             
+            if (items != null) {
             out.println("<div class=\"table-responsive\"><table class=\"table\">");
             out.println("<tr>");
             out.println("<th></th>");
@@ -46,7 +47,7 @@ public class cartDisplayTag extends SimpleTagSupport {
             out.println("<th>Price</th>");
             out.println("<th>Action</th>");
             out.println("</tr>");
-            if (items != null) {
+            
                 double total = 0;
                 for (OrderDetails item : items) {
                     //out.println(item.getItemName() + "<br>");   
@@ -80,7 +81,7 @@ public class cartDisplayTag extends SimpleTagSupport {
                 out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
                 out.println("</div></div></div>");
             } else {
-                out.println("<p>No item</p>");
+                out.println("<p class=\"text-center\">No item</p>");
             }
         } catch (Exception e) {
             e.printStackTrace();
