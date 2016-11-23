@@ -15,16 +15,18 @@ public class OrderDetails {
     int quantity;
     double buyPrice;
     double detailsPrice;
+    String img;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(String itemId, String itemName, int quantity, double buyPrice, double detailsPrice) {
+    public OrderDetails(String itemId, String itemName, int quantity, double buyPrice, double detailsPrice, String img) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.quantity = quantity;
         this.buyPrice = buyPrice;
         this.detailsPrice = detailsPrice;
+        this.img = img;
     }
 
     public String getItemId() {
@@ -65,6 +67,14 @@ public class OrderDetails {
 
     public void setDetailsPrice(double detailsPrice) {
         this.detailsPrice = detailsPrice;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
     
     

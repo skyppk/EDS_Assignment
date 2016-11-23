@@ -59,7 +59,7 @@ public class CreateTable {
         ArrayList<ItemInfo> items = itemDb.selectAvailableItem();
         for(int i = 0; i < items.size(); i++){
             ItemInfo item = items.get(i);
-            OrderDetails od = new OrderDetails(item.getItemId(),item.getItemName(),2,item.getPrice(),2 * item.getPrice());
+            OrderDetails od = new OrderDetails(item.getItemId(),item.getItemName(),2,item.getPrice(),2 * item.getPrice(),item.getImg());
             orderDetails.add(od);
         }
         orderDb.addOrderInfo("o1", "syw", "prick", "2034-4-4", "PM", "pig street", 999.4,orderDetails);
