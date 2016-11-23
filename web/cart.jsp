@@ -14,16 +14,17 @@
         <div class="container">
             <h2>Shopping Cart</h2>
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <%
-                        ShoppingCart cart = (ShoppingCart)session.getAttribute( "cart" );
-                        ArrayList<OrderDetails> arr = null;
-                        if(cart!=null)
-                            arr = cart.getCart();
-                        
-                    %>
-                    <item:showItems items="<%=arr%>"/>
-                </div>
+                <!--<div class="panel-body">-->
+                <%
+                    ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+                    ArrayList<OrderDetails> arr = null;
+                    if (cart != null) {
+                        arr = cart.getCart();
+                    }
+
+                %>
+                <item:showItems items="<%=arr%>"/>
+                <!--</div>-->
             </div>
         </div>
     </body>

@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            
+
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -64,16 +64,34 @@
                             </div>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>-->
-                        
-            <% if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {%>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
+                <div class="input-group" style="max-width: 250px;">
+                    <div class="input-group-btn search-panel">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">Filter by</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#contains">Contains</a></li>
+                            <li><a href="#its_equal">It's equal</a></li>
+                            <li><a href="#greather_than">Greather than ></a></li>
+                            <li><a href="#less_than">Less than < </a></li>
+                            <li class="divider"></li>
+                            <li><a href="#all">Anything</a></li>
+                        </ul>
+                    </div>
+                    <input type="hidden" name="search_param" value="all" id="search_param">         
+                    <input type="text" class="form-control" name="x" placeholder="Search term...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+                <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>            
+                    <% if (userInfo.getLoginId() == null || userInfo.getLoginId().equals("")) {%>
+
                 <li><a href="registration.jsp"><span class="glyphicon glyphicon-user"></span> Registration</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-            <% } else {%>
+                    <% } else {%>
 
-            <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Welcome, <%=userInfo.getFirstName()%></a></li>
                 <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
                 <li>
@@ -83,9 +101,10 @@
                         <input type="submit" value="Logout" name="logoutButton" class="btn btn-default">
                     </form>
                 </li>
+
+                <!--<li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+                <% }%>
             </ul>
-            <!--<li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
-            <% }%>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
@@ -104,7 +123,6 @@
             <li><a href="">Jacket</a></li>
             <li><a href="">Redeeming Gift</a></li>
             <li><a href="">Contact Us</a></li>
-            
         </ul>
     </div>
 </div>

@@ -34,18 +34,45 @@ public class cartDisplayTag extends SimpleTagSupport {
         try {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
+            out.println("<table class=\"table\">");
+            out.println("<tr>");
+            out.println("<th></th>");
+            out.println("<th>Name</th>");
+            out.println("<th>Unit Price</th>");
+            out.println("<th>Quantity</th>");
+            out.println("<th>Price</th>");
+            out.println("<th>Action</th>");
+            out.println("</tr>");
             for (OrderDetails item : items) {
-                //out.println(item.getItemName() + "<br>");
-                out.println("<div class=\"row\"");
-                out.println("<div class=\"col-sm-6 col-md-4\">");
-                out.println("<div class=\"caption\">");
-                out.println("<h4 style=\"white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">" + item.getItemName() + "</h4>");
-                out.println("<p> $" + item.getBuyPrice() + " x " + item.getQuantity() + "</p>");
-                out.println("<p> TOTAL $" + item.getDetailsPrice()+ "</p>");
-                out.println("</div>");
-                out.println("</div>");
-            }
+                //out.println(item.getItemName() + "<br>");   
+                out.println("<tr><td>");
+                out.println("<img class=\"img-rounded\" style=\"max-height:70px;\" src=\"img/d1.jpeg\" alt=\"No Image\">");
+                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println(item.getItemName());
+                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println("$ " + item.getDetailsPrice());
+                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println(item.getQuantity());
+                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println("$ " + item.getBuyPrice());
+                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                out.println("</td></tr>");
+                out.println("</table>");
 
+//                out.println("<div class=\"row\"");
+//                out.println("<div class=\"col-sm-6 col-md-4\">");
+//                out.println("<div class=\"caption\">");
+//                out.println("<h4 style=\"white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">" + item.getItemName() + "</h4>");
+//                out.println("<p> $" + item.getBuyPrice() + " x " + item.getQuantity() + "</p>");
+//                out.println("<p> TOTAL $" + item.getDetailsPrice()+ "</p>");
+//                out.println("</div>");
+//                out.println("</div>");
+            }
+            out.println("<div class=\"panel-body\">");
+            out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ DEFAULT");
+            out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
+            out.println("</div></div></div>");
         } catch (Exception e) {
             e.printStackTrace();
         }
