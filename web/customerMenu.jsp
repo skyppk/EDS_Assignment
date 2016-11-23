@@ -87,14 +87,11 @@
                                 </div>-->
                 <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
 
-                <% if (login.equals("false")) {
-                System.out.print("AAAAA"+userInfo.getFirstName());
-                %>
+                <% if (login.equals("false")) { %>
                 
                 <li><a href="registration.jsp"><span class="glyphicon glyphicon-user"></span> Registration</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <% } else {
-                    System.out.print("BBBBB"+userInfo.getFirstName());%>
+                    <% } else { %>
                 
                 <li><a href="#">Welcome, <%=userInfo.getFirstName()%></a></li>
                 <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>

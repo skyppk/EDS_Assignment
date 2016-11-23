@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -339,11 +340,10 @@ public class UserDB {
     public UserInfo getUserInfo(String longinId, String pwd) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        boolean isValid = false;
         UserInfo user = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT id, UserInfo.login_id AS login_id, password, last_name, first_name, sex, birthday, tel, address, email, user_status, money, credit_amount, bonus_point FROM UserInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id WHERE AccountInfo.login_id = ? AND password = ? AND user_status = 'ACCEPTED' AND account_type = 'CUSTOMER';";
+            String preQueryStatement = "SELECT id, UserInfo.login_id AS login_id, password, last_name, first_name, sex, birthday, tel, address, email, user_status, money, credit_amount, bonus_point, account_type FROM UserInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id WHERE AccountInfo.login_id = ? AND password = ? AND user_status = 'ACCEPTED' AND account_type = 'CUSTOMER';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, longinId);
             pStmnt.setString(2, pwd);
@@ -365,6 +365,7 @@ public class UserDB {
                 user.setMoney(rs.getDouble("money"));
                 user.setCreditAmount(rs.getInt("credit_amount"));
                 user.setBonusPoints(rs.getDouble("bonus_point"));
+                user.setAccountType(rs.getString("account_type"));
             }
             pStmnt.close();
             cnnct.close();
@@ -379,6 +380,48 @@ public class UserDB {
         return user;
     }
 
+    public ArrayList<UserInfo> selectAllUser() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        UserInfo user = null;
+        ArrayList<UserInfo> customers = new ArrayList();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT id, UserInfo.login_id AS login_id, password, last_name, first_name, sex, birthday, tel, address, email, user_status, money, credit_amount, bonus_point FROM UserInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (!rs.next()) {
+                user = new UserInfo();
+                user.setId(rs.getInt("id"));
+                user.setLoginId(rs.getString("login_id"));
+                user.setPassword(rs.getString("password"));
+                user.setLastName(rs.getString("last_name"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setSex(rs.getString("sex"));
+                user.setBirthday(rs.getString("birthday"));
+                user.setTel(rs.getString("tel"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setUserStatus(rs.getString("user_status"));
+                user.setMoney(rs.getDouble("money"));
+                user.setCreditAmount(rs.getInt("credit_amount"));
+                user.setBonusPoints(rs.getDouble("bonus_point"));
+                customers.add(user);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return customers;
+    }
+    
     public boolean checkEmail(String email) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
