@@ -71,8 +71,8 @@
                             <span id="search_concept">Filter by</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#contains">Contains</a></li>
-                            <li><a href="#its_equal">It's equal</a></li>
+                            <li><a href="#contains">Dress</a></li>
+                            <li><a href="#its_equal">Jacket</a></li>
                             <li><a href="#greather_than">Greather than ></a></li>
                             <li><a href="#less_than">Less than < </a></li>
                             <li class="divider"></li>

@@ -46,8 +46,8 @@ public class cartDisplayTag extends SimpleTagSupport {
             for (OrderDetails item : items) {
                 //out.println(item.getItemName() + "<br>");   
                 out.println("<tr><td>");
-                out.println("<img class=\"img-rounded\" style=\"max-height:70px;\" src=\"img/d1.jpeg\" alt=\"No Image\">");
-                out.println("</td><td style=\"vertical-align:middle;\">");
+                out.println("<img class=\"img-rounded\" style=\"max-height:70px;\" src=\"img/" + item.getImg() + "\" alt=\"No Image\">");
+                out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
                 out.println(item.getItemName());
                 out.println("</td><td style=\"vertical-align:middle;\">");
                 out.println("$ " + item.getDetailsPrice());
@@ -58,7 +58,6 @@ public class cartDisplayTag extends SimpleTagSupport {
                 out.println("</td><td style=\"vertical-align:middle;\">");
                 out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
                 out.println("</td></tr>");
-                out.println("</table></div>");
 
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
@@ -69,6 +68,7 @@ public class cartDisplayTag extends SimpleTagSupport {
 //                out.println("</div>");
 //                out.println("</div>");
             }
+            out.println("</table></div>");
             out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
             out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ DEFAULT");
             out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
