@@ -252,7 +252,7 @@ public class ItemDB {
         ArrayList<ItemInfo> items = new ArrayList();
         try{
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM ItemInfo WHERE category = ? item_status = 'AVAILABLE';";
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE category = ? AND item_status = 'AVAILABLE';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, category);
             ResultSet rs = null;
