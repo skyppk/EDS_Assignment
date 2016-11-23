@@ -23,7 +23,6 @@
         <div class="container">
             <div class="row">
                 <items:showItems items="<%=items%>"/>
-                
             </div>
         </div>
     </body>

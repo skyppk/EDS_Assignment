@@ -35,8 +35,8 @@
                         </div>
                         <div class="form-group">
                             <label for="sex">*Sex:</label><br>
-                            <input type="radio" name="sex" value="M" checked> Male
-                            <input type="radio" name="sex" value="F"> Female
+                            <label class="radio-inline"><input type="radio" name="sex" value="M" checked>Male</label>
+                            <label class="radio-inline"><input type="radio" name="sex" value="F">Female</label>
                         </div>
                         <div class="form-group">
                             <label for="tel">*Telephone Number:</label>

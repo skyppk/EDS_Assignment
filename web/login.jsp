@@ -27,9 +27,9 @@
                             <label for="password">Password:</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <div class="checkbox">
+<!--                        <div class="checkbox">
                             <label><input type="checkbox"> Remember me</label>
-                        </div>
+                        </div>-->
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                 </div>
