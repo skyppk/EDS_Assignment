@@ -7,6 +7,7 @@ package cf.tag;
 
 import cf.bean.OrderDetails;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -34,6 +35,8 @@ public class cartDisplayTag extends SimpleTagSupport {
         try {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
+            DecimalFormat df = new DecimalFormat("$ #,##0.00");
+            
             out.println("<div class=\"table-responsive\"><table class=\"table\">");
             out.println("<tr>");
             out.println("<th></th>");
@@ -52,11 +55,11 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
                     out.println(item.getItemName());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("$ " + item.getBuyPrice());
+                    out.println(df.format(item.getBuyPrice()));
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(item.getQuantity());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("$ " + item.getDetailsPrice());
+                    out.println(df.format(item.getDetailsPrice()));
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
                     out.println("</td></tr>");
@@ -70,9 +73,10 @@ public class cartDisplayTag extends SimpleTagSupport {
 //                out.println("</div>");
 //                out.println("</div>");
                 }
+                String sTotal = df.format(total);
                 out.println("</table></div>");
                 out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
-                out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ "+total);
+                out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>"+sTotal);
                 out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
                 out.println("</div></div></div>");
             } else {
