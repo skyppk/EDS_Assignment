@@ -34,7 +34,7 @@ public class cartDisplayTag extends SimpleTagSupport {
         try {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
-            out.println("<table class=\"table\">");
+            out.println("<div class=\"table-responsive\"><table class=\"table\">");
             out.println("<tr>");
             out.println("<th></th>");
             out.println("<th>Name</th>");
@@ -58,7 +58,7 @@ public class cartDisplayTag extends SimpleTagSupport {
                 out.println("</td><td style=\"vertical-align:middle;\">");
                 out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
                 out.println("</td></tr>");
-                out.println("</table>");
+                out.println("</table></div>");
 
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
@@ -69,7 +69,7 @@ public class cartDisplayTag extends SimpleTagSupport {
 //                out.println("</div>");
 //                out.println("</div>");
             }
-            out.println("<div class=\"panel-body\">");
+            out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
             out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ DEFAULT");
             out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
             out.println("</div></div></div>");
