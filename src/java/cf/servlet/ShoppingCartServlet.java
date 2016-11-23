@@ -35,7 +35,7 @@ public class ShoppingCartServlet extends HttpServlet {
             ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
             if(cart==null)
                 cart = new ShoppingCart();
-            cart.getCart().add(new OrderDetails(itemId,itemName,quantity,itemPrice,quantity*itemPrice));
+            cart.getCart().add(new OrderDetails(itemId,itemName,quantity,itemPrice,quantity*itemPrice,"pig.png"));
             //response.getWriter().println(test);
             session.setAttribute("cart",cart); 
     }
