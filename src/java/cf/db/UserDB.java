@@ -364,7 +364,7 @@ public class UserDB {
                 user.setUserStatus(rs.getString("user_status"));
                 user.setMoney(rs.getDouble("money"));
                 user.setCreditAmount(rs.getInt("credit_amount"));
-                user.setBonusPoints(rs.getDouble("bonus_points"));
+                user.setBonusPoints(rs.getDouble("bonus_point"));
             }
             pStmnt.close();
             cnnct.close();
