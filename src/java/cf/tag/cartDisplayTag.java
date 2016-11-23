@@ -43,22 +43,24 @@ public class cartDisplayTag extends SimpleTagSupport {
             out.println("<th>Price</th>");
             out.println("<th>Action</th>");
             out.println("</tr>");
-            for (OrderDetails item : items) {
-                //out.println(item.getItemName() + "<br>");   
-                out.println("<tr><td>");
-                out.println("<img class=\"img-rounded\" style=\"max-height:70px;\" src=\"img/" + item.getImg() + "\" alt=\"No Image\">");
-                out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
-                out.println(item.getItemName());
-                out.println("</td><td style=\"vertical-align:middle;\">");
-                out.println("$ " + item.getDetailsPrice());
-                out.println("</td><td style=\"vertical-align:middle;\">");
-                out.println(item.getQuantity());
-                out.println("</td><td style=\"vertical-align:middle;\">");
-                out.println("$ " + item.getBuyPrice());
-                out.println("</td><td style=\"vertical-align:middle;\">");
-                out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
-                out.println("</td></tr>");
-
+            if (items != null) {
+                double total = 0;
+                for (OrderDetails item : items) {
+                    //out.println(item.getItemName() + "<br>");   
+                    out.println("<tr><td>");
+                    out.println("<img class=\"img-rounded\" style=\"max-height:70px;\" src=\"img/" + item.getImg() + "\" alt=\"No Image\">");
+                    out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
+                    out.println(item.getItemName());
+                    out.println("</td><td style=\"vertical-align:middle;\">");
+                    out.println("$ " + item.getDetailsPrice());
+                    out.println("</td><td style=\"vertical-align:middle;\">");
+                    out.println(item.getQuantity());
+                    out.println("</td><td style=\"vertical-align:middle;\">");
+                    out.println("$ " + item.getBuyPrice());
+                    out.println("</td><td style=\"vertical-align:middle;\">");
+                    out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                    out.println("</td></tr>");
+                    total += item.getBuyPrice();
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
 //                out.println("<div class=\"caption\">");
@@ -67,12 +69,15 @@ public class cartDisplayTag extends SimpleTagSupport {
 //                out.println("<p> TOTAL $" + item.getDetailsPrice()+ "</p>");
 //                out.println("</div>");
 //                out.println("</div>");
+                }
+                out.println("</table></div>");
+                out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
+                out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ "+total);
+                out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
+                out.println("</div></div></div>");
+            } else {
+                out.println("<p>No item</p>");
             }
-            out.println("</table></div>");
-            out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
-            out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>$ DEFAULT");
-            out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
-            out.println("</div></div></div>");
         } catch (Exception e) {
             e.printStackTrace();
         }
