@@ -101,7 +101,7 @@
                     <ul class="dropdown-menu inverse-dropdown">
                         <li><a href="profile.jsp">Profile</a></li>
                         <li><a href="orderHistory?action=now&id=<%=userInfo.getLoginId()%>">Existing Order</a></li>
-                        <li><a href="orderHistory?id=<%=userInfo.getLoginId()%>">History</a></li>
+                        <li><a href="orderHistory?id=<%=userInfo.getLoginId()%>">Order History</a></li>
 
                         <!--                        <li role="separator" class="divider"></li>
                                                 <li><a href="#">Separated link</a></li>
@@ -109,7 +109,7 @@
                                                 <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
-                <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
+                <li><a href="gift.jsp">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
                 <li>
                     <form method="post" action="login" class="navbar-form">
                         <input type="hidden" name="action" value="logout">
