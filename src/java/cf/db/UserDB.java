@@ -178,7 +178,7 @@ public class UserDB {
     }
     
 //    int id,String lastName,String firstName, String sex, String birthday, 
-    public boolean editUserInfo(String loginId,String password, String tel, String address, String email) {
+    public boolean editUserInfo(String loginId, String tel, String address, String email) {
         Connection cnnct = null;
         Statement stmt = null;
         boolean isSuccess = false;
@@ -187,7 +187,39 @@ public class UserDB {
             cnnct.setAutoCommit(false);
             stmt = cnnct.createStatement();
             stmt.addBatch("UPDATE UserInfo SET tel = '" + tel + "', address = '" + address + "', email = '" + email + "' WHERE login_id = '" + loginId + "'");
-            stmt.addBatch("UPDATE AccountInfo SET password = '" + password + "' WHERE login_id = '" + loginId + "'");
+            int counts[] = stmt.executeBatch();
+            cnnct.commit();
+            System.out.println("Committed " + counts.length);
+            stmt.close();
+            cnnct.close();
+            isSuccess = true;
+        } catch (SQLException ex) {
+            if(cnnct != null){
+                try{
+                    cnnct.rollback();
+                }catch(SQLException ex1){
+                    ex1.printStackTrace();
+                }
+            }
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean editPassword(String loginId,String newPassword) {
+        Connection cnnct = null;
+        Statement stmt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            cnnct.setAutoCommit(false);
+            stmt = cnnct.createStatement();
+            stmt.addBatch("UPDATE AccountInfo SET password = '" + newPassword + "' WHERE login_id = '" + loginId + "'");
             int counts[] = stmt.executeBatch();
             cnnct.commit();
             System.out.println("Committed " + counts.length);

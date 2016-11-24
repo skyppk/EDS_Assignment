@@ -24,6 +24,21 @@
     .nav-tabs {
         text-align:center;
     }
+
+/*    .inverse-dropdown{
+        background-color: #222;
+        border-color: #080808;
+        li>a{
+            color: #000;
+            &:hover{
+                color: #fff;
+                background-color: #000;
+            }
+        }
+        &>.divider {
+            background-color: #000;
+        }
+    }*/
 </style>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -88,12 +103,24 @@
                 <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
 
                 <% if (login.equals("false")) { %>
-                
+
                 <li><a href="registration.jsp"><span class="glyphicon glyphicon-user"></span> Registration</a></li>
                 <li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <% } else { %>
-                
-                <li><a href="#">Welcome, <%=userInfo.getFirstName()%></a></li>
+                    <% } else {%>
+
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, <%=userInfo.getFirstName()%><span class="caret"></span></a>
+                    <ul class="dropdown-menu inverse-dropdown">
+                        <li><a href="profile.jsp">Profile</a></li>
+                        <li><a href="#">Existing Order</a></li>
+                        <li><a href="#">History</a></li>
+                        
+<!--                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>-->
+                    </ul>
+                </li>
                 <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
                 <li>
                     <form method="post" action="login" class="navbar-form">
