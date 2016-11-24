@@ -55,7 +55,7 @@ public class OrderDB {
                     + "order_id varchar(20) NOT NULL,"
                     + "login_id varchar(25) NOT NULL,"
                     + "delivery_type varchar(15) NOT NULL,"
-                    + "delivery_date Date,"
+                    + "delivery_date Date DEFAULT sysdate,"
                     + "delivery_time varchar(2),"
                     + "delivery_address varchar(255),"
                     + "order_price double NOT NULL,"
@@ -112,12 +112,13 @@ public class OrderDB {
         Connection cnnct = null;
         Statement stmt = null;
         PreparedStatement pStmnt = null;
+        String deliveryDay = deliveryDate != null ? deliveryDate : "DEFAULT";
         boolean isSuccess = false;
         try{
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
             stmt = cnnct.createStatement();
-            stmt.addBatch("INSERT INTO OrderInfo VALUES (null,'" + orderId + "','" + loginId + "','" + deliveryType + "','" + deliveryDate + "','" + deliveryTime + "','" + deliveryAddress + "','" + orderPrice + "',DEFAULT,DEFAULT)");
+            stmt.addBatch("INSERT INTO OrderInfo VALUES (null,'" + orderId + "','" + loginId + "','" + deliveryType + "','" + deliveryDay + "','" + deliveryTime + "','" + deliveryAddress + "','" + orderPrice + "',DEFAULT,DEFAULT)");
             if(orderDetails.isEmpty()){
                 throw new SQLException();
             }
