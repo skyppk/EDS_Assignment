@@ -6,10 +6,12 @@
 package cf.db;
 
 import cf.bean.OrderDetails;
+import cf.bean.OrderInfo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -108,6 +110,47 @@ public class OrderDB {
         } catch (IOException ex){
             ex.printStackTrace();
         } 
+    }
+    
+    public ArrayList<OrderInfo> queryOrderHistory(String userId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderInfo order = null;
+        ArrayList<OrderInfo> orders = new ArrayList();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM OrderInfo WHERE login_id = ? order by id desc limit 10;";
+            System.out.println(preQueryStatement);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                order = new OrderInfo();
+                order.setId(rs.getInt("id"));
+                order.setLoginId(rs.getString("login_id"));
+                order.setOrderId(rs.getString("order_id"));
+                order.setDeliveryType(rs.getString("delivery_type"));
+                order.setDeliveryDate(rs.getString("delivery_date"));
+                order.setDeliveryTime(rs.getString("delivery_time"));
+                order.setDeliveryAddress(rs.getString("delivery_address"));
+                order.setOrderDate(rs.getString("order_date"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderPrice(rs.getDouble("order_price"));
+                
+                orders.add(order);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orders;
     }
     
     public boolean addOrderInfo(String orderId, String loginId, String deliveryType, String deliveryDate, String deliveryTime, String deliveryAddress, double orderPrice, ArrayList<OrderDetails> orderDetails,double bonusPoint){

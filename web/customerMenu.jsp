@@ -100,7 +100,7 @@
                     <ul class="dropdown-menu inverse-dropdown">
                         <li><a href="profile.jsp">Profile</a></li>
                         <li><a href="#">Existing Order</a></li>
-                        <li><a href="orderHistory.jsp">History</a></li>
+                        <li><a href="orderHistory?id=<%=userInfo.getLoginId()%>">History</a></li>
 
                         <!--                        <li role="separator" class="divider"></li>
                                                 <li><a href="#">Separated link</a></li>
