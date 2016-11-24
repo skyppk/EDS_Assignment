@@ -5,8 +5,11 @@
  */
 package cf.servlet;
 
+import cf.bean.ItemInfo;
 import cf.db.ItemDB;
 import java.io.IOException;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,8 +46,25 @@ public class HandleSearch extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        String keyword = request.getParameter("keyword");
         if ("all".equalsIgnoreCase(action)) {
-            
+            ArrayList<ItemInfo> items = db.searchItemByInput(keyword);
+            request.setAttribute("items", items);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/showItems.jsp");
+            rd.forward(request, response);
+        } else if ("Dress".equalsIgnoreCase(action)||"Jacket".equalsIgnoreCase(action)||"Accessory".equalsIgnoreCase(action)) {
+            ArrayList<ItemInfo> items = db.searchItemByInputFilter(action, keyword);
+            request.setAttribute("items", items);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/showItems.jsp");
+            rd.forward(request, response);
+        } else if ("Designer".equalsIgnoreCase(action)) {
+            ArrayList<ItemInfo> items = db.searchItemByDesigner(keyword);
+            request.setAttribute("items", items);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/showItems.jsp");
+            rd.forward(request, response);
         }
     }
 }

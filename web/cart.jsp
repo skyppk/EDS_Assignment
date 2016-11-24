@@ -11,7 +11,7 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
-                <script>
+        <script>
             $(function () {
 
             });
@@ -34,15 +34,15 @@
                     else
                         alert('Unable to remove item');
                     updateTotal();
-                    
+
                 });
             }
             function updateTotal() {
                 price = 0;
                 $.each($("td[id='dtprice']"), function (key, value) {
-                    price += Number($(value).text().replace('$','').replace(',',''));
+                    price += Number($(value).text().replace('$', '').replace(',', ''));
                 });
-                $('#totalValue').text('$ '+price);
+                $('#totalValue').text('$ ' + price);
             }
         </script>
         <div class="container">

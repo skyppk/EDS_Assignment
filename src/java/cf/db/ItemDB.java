@@ -20,35 +20,36 @@ import java.util.ArrayList;
  * @author apple
  */
 public class ItemDB {
+
     String dburl;
     String dbUser;
     String dbPassword;
-    
-    public ItemDB(){
-        
+
+    public ItemDB() {
+
     }
-    
+
     public ItemDB(String dburl, String dbUser, String dbPassword) {
         this.dburl = dburl;
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
     }
-    
-    public Connection getConnection() throws SQLException, IOException{
-        try{
+
+    public Connection getConnection() throws SQLException, IOException {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(dburl, dbUser, dbPassword);
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
-       public void CreateItemInfoTable(){
-       Connection cnnct = null;
+
+    public void CreateItemInfoTable() {
+        Connection cnnct = null;
         Statement stmnt = null;
-        
-        try{
+
+        try {
             cnnct = getConnection();
             stmnt = cnnct.createStatement();
             String sql
@@ -59,7 +60,7 @@ public class ItemDB {
                     + "category varchar(20) NOT NULL,"
                     + "designer_name varchar(30) NOT NULL,"
                     + "price double NOT NULL,"
-                    + "descriptions varchar(255) NOT NULL,"                   
+                    + "descriptions varchar(255) NOT NULL,"
                     + "img varchar(255) NOT NULL,"
                     + "item_status varchar(15) DEFAULT 'AVAILABLE',"
                     + "UNIQUE (item_id),"
@@ -68,21 +69,21 @@ public class ItemDB {
             stmnt.execute(sql);
             stmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
-            while(ex != null){
+        } catch (SQLException ex) {
+            while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        } 
+        }
     }
-    
-    public boolean addItemInfo(String itemId, String itemName, String category, String designerName, double price, String descriptions, String img){
+
+    public boolean addItemInfo(String itemId, String itemName, String category, String designerName, double price, String descriptions, String img) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "INSERT INTO ItemInfo VALUES (null,?,?,?,?,?,?,?,DEFAULT)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -95,27 +96,27 @@ public class ItemDB {
             pStmnt.setString(7, img);
 //            pStmnt.setString(8, "AVAILABLE");
             int rowCount = pStmnt.executeUpdate();
-            if(rowCount >= 1){
+            if (rowCount >= 1) {
                 isSuccess = true;
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
-            while(ex != null){
+        } catch (SQLException ex) {
+            while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return isSuccess;
     }
-    
-    public boolean editItemInfo(int id, double price , String descriptions, String itemStatus){
+
+    public boolean editItemInfo(int id, double price, String descriptions, String itemStatus) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE ItemInfo SET price = ? , descriptions = ? , item_status =? WHERE id = ? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -124,27 +125,27 @@ public class ItemDB {
             pStmnt.setString(3, itemStatus);
             pStmnt.setInt(4, id);
             int rowCount = pStmnt.executeUpdate();
-            if(rowCount >= 1){
+            if (rowCount >= 1) {
                 isSuccess = true;
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
-            while(ex != null){
+        } catch (SQLException ex) {
+            while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return isSuccess;
     }
-    
-    public boolean editItemInfo(ItemInfo itemInfo){
+
+    public boolean editItemInfo(ItemInfo itemInfo) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE ItemInfo SET price = ? , descriptions = ? , item_status = ? WHERE id = ? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -153,35 +154,35 @@ public class ItemDB {
             pStmnt.setString(3, itemInfo.getItemStatus());
             pStmnt.setInt(4, itemInfo.getId());
             int rowCount = pStmnt.executeUpdate();
-            if(rowCount >= 1){
+            if (rowCount >= 1) {
                 isSuccess = true;
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
-            while(ex != null){
+        } catch (SQLException ex) {
+            while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return isSuccess;
     }
-    
-    public ArrayList<ItemInfo> selectAllItem(){
+
+    public ArrayList<ItemInfo> selectAllItem() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ItemInfo item = null;
         ArrayList<ItemInfo> items = new ArrayList();
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM ItemInfo";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
 //            pStmnt.setString(1, tel);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 item = new ItemInfo();
                 item.setId(rs.getInt("id"));
                 item.setItemId(rs.getString("item_id"));
@@ -196,30 +197,30 @@ public class ItemDB {
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return items;
     }
-    
-    public ArrayList<ItemInfo> selectAvailableItem(){
+
+    public ArrayList<ItemInfo> selectAvailableItem() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ItemInfo item = null;
         ArrayList<ItemInfo> items = new ArrayList();
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM ItemInfo WHERE item_status = 'AVAILABLE';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
 //            pStmnt.setString(1, tel);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 item = new ItemInfo();
                 item.setId(rs.getInt("id"));
                 item.setItemId(rs.getString("item_id"));
@@ -234,30 +235,30 @@ public class ItemDB {
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return items;
     }
-    
-    public ArrayList<ItemInfo> selectItemByCategory(String category){
+
+    public ArrayList<ItemInfo> selectItemByCategory(String category) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ItemInfo item = null;
         ArrayList<ItemInfo> items = new ArrayList();
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM ItemInfo WHERE category = ? AND item_status = 'AVAILABLE';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, category);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 item = new ItemInfo();
                 item.setId(rs.getInt("id"));
                 item.setItemId(rs.getString("item_id"));
@@ -272,44 +273,44 @@ public class ItemDB {
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return items;
     }
-    
-    public boolean checkItemId(String itemId){
+
+    public boolean checkItemId(String itemId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isVaild = false;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT * FROM ItemInfo WHERE item_id = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, itemId);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 isVaild = true;
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return isVaild;
     }
-    
+
     public ItemInfo queryItemDetail(String id) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -332,7 +333,7 @@ public class ItemDB {
                 item.setDescriptions(rs.getString("descriptions"));
                 item.setImg(rs.getString("img"));
                 item.setItemStatus(rs.getString("item_status"));
-                
+
             }
             pStmnt.close();
             cnnct.close();
@@ -346,29 +347,77 @@ public class ItemDB {
         }
         return item;
     }
-    
+
     public ArrayList<ItemInfo> searchItemByInput(String input) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ItemInfo item = null;
         ArrayList<ItemInfo> items = new ArrayList();
-        String search = "%"+input+"%";
+        String search = "%" + input + "%";
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM ItemInfo WHERE item_name LIKE ? OR category LIKE ? OR designer_name LIKE ? OR price LIKE ? AND item_status = 'AVAILABLE';";
+//            String preQueryStatement = "SELECT * FROM ItemInfo WHERE item_name LIKE ? OR category LIKE ? OR designer_name LIKE ? OR price LIKE ? AND item_status = 'AVAILABLE';";
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(item_name) LIKE ? AND item_status = 'AVAILABLE';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
 //            pStmnt.setString(1, "%" + input + "%");
 //            pStmnt.setString(2, "%" + input + "%");
 //            pStmnt.setString(3, "%" + input + "%");
 //            pStmnt.setString(4, "%" + input + "%");
             pStmnt.setString(1, search);
-            pStmnt.setString(2, search);
-            pStmnt.setString(3, search);
-            pStmnt.setString(4, search);
+//            pStmnt.setString(2, search);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
+
+    public ArrayList<ItemInfo> searchItemByInputFilter(String type, String input) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(item_name) LIKE ? and category = ? AND item_status = 'AVAILABLE';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+            pStmnt.setString(2, type);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
                 item = new ItemInfo();
                 item.setId(rs.getInt("id"));
                 item.setItemId(rs.getString("item_id"));
@@ -394,27 +443,74 @@ public class ItemDB {
         return items;
     }
     
-    public boolean dropItemInfoTable(){
+    public ArrayList<ItemInfo> searchItemByDesigner(String input) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(designer_name) LIKE ? AND item_status = 'AVAILABLE';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+//            pStmnt.setString(2,s type);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
+
+    public boolean dropItemInfoTable() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "DROP TABLE ItemInfo ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            
+
             int rowCount = pStmnt.executeUpdate();
-            if(rowCount >= 1){
+            if (rowCount >= 1) {
                 isSuccess = true;
             }
             pStmnt.close();
             cnnct.close();
-        } catch (SQLException ex){
-            while(ex != null){
+        } catch (SQLException ex) {
+            while (ex != null) {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return isSuccess;
