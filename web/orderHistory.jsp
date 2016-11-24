@@ -19,7 +19,11 @@
                 <div class="table-responsive">
                     <table class="table">
                         <tr>
-                            <th>Order</th>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Price</th>
+                            <th>Delivery Date</th>
+                            <th>Address</th>
                         </tr>
                     </table>
                 </div>
