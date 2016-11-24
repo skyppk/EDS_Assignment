@@ -489,6 +489,197 @@ public class ItemDB {
         }
         return items;
     }
+    
+    public ArrayList<ItemInfo> searchItemBySorting(String type, String input, String sorting) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(item_name) LIKE ? and category = ? AND item_status = 'AVAILABLE' order by item_name "+sorting+";";
+            System.out.println(search + type);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+            pStmnt.setString(2, type);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                pStmnt = cnnct.prepareStatement("SUCCESS");
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
+    
+    public ArrayList<ItemInfo> searchAllItemBySorting(String input, String sorting) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(item_name) LIKE ? AND item_status = 'AVAILABLE' order by item_name "+sorting+";";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                pStmnt = cnnct.prepareStatement("SUCCESS");
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
+    
+    public ArrayList<ItemInfo> searchItemBySortingDesigner(String type, String input, String sorting) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(designer_name) LIKE ? and category = ? AND item_status = 'AVAILABLE' order by item_name "+sorting+";";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+            pStmnt.setString(2, type);
+//            pStmnt.setString(3, sorting);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
+    
+    public ArrayList<ItemInfo> searchAllItemBySortingDesigner(String input, String sorting) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ItemInfo item = null;
+        ArrayList<ItemInfo> items = new ArrayList();
+        String search = "%" + input + "%";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM ItemInfo WHERE lower(designer_name) LIKE ? AND item_status = 'AVAILABLE' order by item_name "+sorting+";";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, "%" + input + "%");
+//            pStmnt.setString(2, "%" + input + "%");
+//            pStmnt.setString(3, "%" + input + "%");
+//            pStmnt.setString(4, "%" + input + "%");
+            pStmnt.setString(1, search);
+//            pStmnt.setString(3, sorting);
+//            pStmnt.setString(3, search);
+//            pStmnt.setString(4, search);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                item = new ItemInfo();
+                item.setId(rs.getInt("id"));
+                item.setItemId(rs.getString("item_id"));
+                item.setItemName(rs.getString("item_name"));
+                item.setCategory(rs.getString("category"));
+                item.setDesignerName(rs.getString("designer_name"));
+                item.setPrice(rs.getDouble("price"));
+                item.setDescriptions(rs.getString("descriptions"));
+                item.setImg(rs.getString("img"));
+                item.setItemStatus(rs.getString("item_status"));
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
+    }
 
     public boolean dropItemInfoTable() {
         Connection cnnct = null;
