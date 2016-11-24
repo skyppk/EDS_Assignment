@@ -37,8 +37,8 @@
                         <tr>
                             <td><%=order.getOrderId()%></td>
                             <td><%=order.getOrderDate()%></td>
-                            <td><%=order.getOrderPrice()%></td>
-                            <td><%=order.getDeliveryDate()%></td>
+                            <td>$ <%=order.getOrderPrice()%></td>
+                            <td><%=order.getDeliveryDate()%> <%=order.getDeliveryTime()%></td>
                             <td><%=order.getDeliveryAddress()%></td>
                         </tr>
                                     <% } %>
