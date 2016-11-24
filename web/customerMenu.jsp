@@ -25,20 +25,25 @@
         text-align:center;
     }
 
-/*    .inverse-dropdown{
+    .btn-inverse {
         background-color: #222;
-        border-color: #080808;
-        li>a{
-            color: #000;
-            &:hover{
-                color: #fff;
-                background-color: #000;
-            }
-        }
-        &>.divider {
+        border-color: #ccc;
+        color: #fff;
+
+        &:hover{
+            color: #fff;
             background-color: #000;
         }
-    }*/
+    }
+
+    .inverse-dropdown>li>a{
+        color: white;
+    }
+
+    .inverse-dropdown{
+        background-color: #222;
+        border-color: #080808;
+    }
 </style>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -54,52 +59,34 @@
             </button>
             <a class="navbar-brand" href="index.jsp">C & F Dress</a>
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search" method="post" action="searchItem">
+                    <div class="input-group">
+                        <div class="input-group-btn search-panel">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span id="search_concept" >All</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" id="selection">
+                                <li><a>All</a></li>
+                                <li><a>Dresses</a></li>
+                                <li><a>Jackets</a></li>
+                                <li><a>Accessories</a></li>
+                                <li class="divider"></li>
+                                <li><a>Designer</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="action" value="All" id="action">         
+                        <input type="text" class="form-control" name="keyword" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <!--            <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">Link</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                        </ul>-->
-            <!--            <form class="navbar-form navbar-left">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>-->
             <ul class="nav navbar-nav navbar-right">
-                <!--                <div class="input-group" style="max-width: 250px;">
-                                    <div class="input-group-btn search-panel">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                            <span id="search_concept">Filter by</span> <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#contains">Dress</a></li>
-                                            <li><a href="#its_equal">Jacket</a></li>
-                                            <li><a href="#greather_than">Greather than ></a></li>
-                                            <li><a href="#less_than">Less than < </a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#all">Anything</a></li>
-                                        </ul>
-                                    </div>
-                                    <input type="hidden" name="search_param" value="all" id="search_param">         
-                                    <input type="text" class="form-control" name="x" placeholder="Search term...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                    </span>
-                                </div>-->
                 <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
 
                 <% if (login.equals("false")) { %>
@@ -114,11 +101,11 @@
                         <li><a href="profile.jsp">Profile</a></li>
                         <li><a href="#">Existing Order</a></li>
                         <li><a href="#">History</a></li>
-                        
-<!--                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>-->
+
+                        <!--                        <li role="separator" class="divider"></li>
+                                                <li><a href="#">Separated link</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
                 <li><a href="#">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
@@ -126,7 +113,7 @@
                     <form method="post" action="login" class="navbar-form">
                         <input type="hidden" name="action" value="logout">
 
-                        <input type="submit" value="Logout" name="logoutButton" class="btn btn-default">
+                        <input type="submit" value="Logout" name="logoutButton" class="btn btn-default btn-inverse">
                     </form>
                 </li>
 
@@ -156,23 +143,9 @@
 </div>
 <div style="margin-top:10px"></div>
 
-<!--<div class="input-group">
-                <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span id="search_concept">Filter by</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#contains">Contains</a></li>
-                        <li><a href="#its_equal">It's equal</a></li>
-                        <li><a href="#greather_than">Greather than ></a></li>
-                        <li><a href="#less_than">Less than < </a></li>
-                        <li class="divider"></li>
-                        <li><a href="#all">Anything</a></li>
-                    </ul>
-                </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">         
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-                </div>-->
+<script>
+    $('#selection li a').click(function(){
+        $('#search_concept').text($(this).text());
+        $('#action').val($(this).text());
+    });
+</script>

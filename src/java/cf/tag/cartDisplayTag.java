@@ -6,6 +6,7 @@
 package cf.tag;
 
 import cf.bean.OrderDetails;
+import cf.bean.UserInfo;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -21,7 +22,11 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class cartDisplayTag extends SimpleTagSupport {
 
     private ArrayList<OrderDetails> items;
-//    private String tagType;
+    private String tagType;
+
+    public void setTagType(String tagType) {
+        this.tagType = tagType;
+    }
 
     public void setItems(ArrayList<OrderDetails> items) {
         this.items = items;
@@ -36,18 +41,20 @@ public class cartDisplayTag extends SimpleTagSupport {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
             DecimalFormat df = new DecimalFormat("$ #,##0.00");
-            
+
             if (items != null) {
-            out.println("<div class=\"table-responsive\"><table class=\"table\">");
-            out.println("<tr>");
-            out.println("<th></th>");
-            out.println("<th>Name</th>");
-            out.println("<th>Unit Price</th>");
-            out.println("<th>Quantity</th>");
-            out.println("<th>Price</th>");
-            out.println("<th>Action</th>");
-            out.println("</tr>");
-            
+                out.println("<div class=\"table-responsive\"><table class=\"table\">");
+                out.println("<tr>");
+                out.println("<th></th>");
+                out.println("<th>Name</th>");
+                out.println("<th>Unit Price</th>");
+                out.println("<th>Quantity</th>");
+                out.println("<th>Price</th>");
+                if ("cart".equalsIgnoreCase(tagType)) {
+                    out.println("<th>Action</th>");
+                }
+                out.println("</tr>");
+
                 double total = 0;
                 for (OrderDetails item : items) {
                     //out.println(item.getItemName() + "<br>");   
@@ -61,8 +68,10 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println(item.getQuantity());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(df.format(item.getDetailsPrice()));
-                    out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                    if ("cart".equalsIgnoreCase(tagType)) {
+                        out.println("</td><td style=\"vertical-align:middle;\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                    }
                     out.println("</td></tr>");
                     total += item.getDetailsPrice();
 //                out.println("<div class=\"row\"");
@@ -76,10 +85,37 @@ public class cartDisplayTag extends SimpleTagSupport {
                 }
                 String sTotal = df.format(total);
                 out.println("</table></div>");
-                out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
-                out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>"+sTotal);
-                out.println("<small><button type=\"button\" class=\"btn btn-default\">Order</button></small></h4>");
-                out.println("</div></div></div>");
+
+                if ("cart".equalsIgnoreCase(tagType)) {
+                    out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
+                    out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>" + sTotal);
+                    out.println("<small><button type=\"button\" class=\"btn btn-default\" onclick=\"location.href='ShoppingCartServlet?action=placeOrder'\">Order</button></small></h4>");
+                    out.println("</div></div></div>");
+                } else if ("placeOrder".equalsIgnoreCase(tagType)) {
+                    out.println("<div class=\"panel-body\"\">");
+                    out.println("<div class=\"row\"><h4><small>Total Price: </small>" + sTotal);
+                    out.println("<form>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"deliveryType\">Delivery Type</label><br>");
+                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"deliveryType\" value=\"delivery\" checked>Delivery</label>");
+                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"deliveryType\" value=\"self-pick\" checked>Self-pick</label>");
+                    out.println("</div>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"address\">Delivery address</label>");
+                    out.println("<input type=\"address\" class=\"form-control\" id=\"address\">");
+                    out.println("</div>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"date\">Delivery Date</label>");
+                    out.println("<input type=\"date\" class=\"form-control\" id=\"date\">");
+                    out.println("</div>");
+                    out.println("<div class=\"form-group\">");
+                    out.println("<label for=\"time\">Delivery Time:</label><br>");
+                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"AM\" checked>AM</label>");
+                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"PM\" checked>PM</label>");
+                    out.println("</div>");
+                    out.println("<button type=\"submit\" class=\"btn btn-default\">Submit</button>");
+                    out.println("</div>");
+                }
             } else {
                 out.println("<p class=\"text-center\">No item</p>");
             }

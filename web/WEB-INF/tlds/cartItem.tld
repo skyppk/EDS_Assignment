@@ -12,12 +12,12 @@
           <required>true</required>
           <type>java.util.ArrayList</type>
           <rtexprvalue>true</rtexprvalue>
-      </attribute>
-<!--      <attribute>
+      </attribute>  
+      <attribute>
           <name>tagType</name>
           <required>true</required>
           <type>java.lang.String</type>
           <rtexprvalue>true</rtexprvalue>
-      </attribute>-->
+      </attribute>
   </tag>
 </taglib>
