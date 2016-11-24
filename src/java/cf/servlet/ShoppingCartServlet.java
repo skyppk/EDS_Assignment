@@ -55,7 +55,7 @@ public class ShoppingCartServlet extends HttpServlet {
                 break;
             case "modifyQuantity":
                 break;
-
+                
         }
 
         if ("placeOrder".equalsIgnoreCase(action)) {

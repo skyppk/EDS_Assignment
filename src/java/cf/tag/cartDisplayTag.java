@@ -70,7 +70,7 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println(df.format(item.getDetailsPrice()));
                     if ("cart".equalsIgnoreCase(tagType)) {
                         out.println("</td><td style=\"vertical-align:middle;\">");
-                        out.println("<button onclick=\"dropItem(" + item.getItemId() + ",$(this))\" type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                        out.println("<button onclick=\"dropItem('" + item.getItemId() + "',$(this))\" type=\"button\" class=\"btn btn-default\">Cancel</button>");
                     }
                     out.println("</td></tr>");
                     total += item.getDetailsPrice();
