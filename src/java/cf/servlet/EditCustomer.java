@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author apple
  */
-@WebServlet(urlPatterns = {"/handleCustomer"})
+@WebServlet(urlPatterns = {"/editCustomer"})
 public class EditCustomer extends HttpServlet{
     private UserDB db;
 
