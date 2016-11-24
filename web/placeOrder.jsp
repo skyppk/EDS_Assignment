@@ -46,8 +46,8 @@
                                 //window.location = "orderhistory.jsp"
                             }
                             else {
-                                alert(data.msg+"\n\nRedirecting to home page...");
-                                window.location = "index.jsp";
+                                //alert(data.msg+"\n\nRedirecting to home page...");
+                                window.location = "error.jsp?msg="+data.msg;
                             }
                         },
                         dataType: 'json'
