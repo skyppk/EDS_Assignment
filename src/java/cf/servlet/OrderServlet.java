@@ -62,17 +62,18 @@ private OrderDB db;
             );
             **/
             double price = Double.parseDouble(request.getParameter("total"));
+            String orderDate = request.getParameter("date");
             if(checkBalance(info,price)){
                 boolean status = db.addOrderInfo(
                         generateOrderID(),
                         info.getLoginId(),
                         request.getParameter("deliveryType"),
-                        request.getParameter("date"),
+                        (orderDate.equals("") ? null : orderDate),
                         request.getParameter("time"),
                         request.getParameter("address"),
                         price,
-                        order//,
-                        //getBonus(price)
+                        order,
+                        getBonus(price)
                 );
                 if(status)
                     makeResponse(response,true,null);
