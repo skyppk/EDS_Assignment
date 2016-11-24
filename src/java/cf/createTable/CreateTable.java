@@ -75,7 +75,7 @@ public class CreateTable {
             OrderDetails od = new OrderDetails(item.getItemId(), item.getItemName(), 2, item.getPrice(), 2 * item.getPrice(), item.getImg());
             orderDetails.add(od);
         }
-        orderDb.addOrderInfo("o1", "syw", "prick", "2034-4-4", "PM", "pig street", 999.4, orderDetails);
+        orderDb.addOrderInfo("o1", "syw", "prick", null, "PM", "pig street", 999.4, orderDetails,33.2);
 //        orderDb.addOrderInfo("o2", "syw", "prick", "2034-4-4", "PM", "pig street", 999.4,orderDetails2);
 
         if (userDb.isValidUser("syw", "syw")) {
