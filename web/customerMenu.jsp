@@ -69,9 +69,9 @@
                             </button>
                             <ul class="dropdown-menu" role="menu" id="selection">
                                 <li><a>All</a></li>
-                                <li><a>Dresses</a></li>
-                                <li><a>Jackets</a></li>
-                                <li><a>Accessories</a></li>
+                                <li><a>Dress</a></li>
+                                <li><a>Jacket</a></li>
+                                <li><a>Accessory</a></li>
                                 <li class="divider"></li>
                                 <li><a>Designer</a></li>
                             </ul>

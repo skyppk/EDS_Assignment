@@ -108,7 +108,7 @@ public class OrderDB {
         } 
     }
     
-    public boolean addOrderInfo(String orderId, String loginId, String deliveryType, String deliveryDate, String deliveryTime, String deliveryAddress, double orderPrice, ArrayList<OrderDetails> orderDetails){
+    public boolean addOrderInfo(String orderId, String loginId, String deliveryType, String deliveryDate, String deliveryTime, String deliveryAddress, double orderPrice, ArrayList<OrderDetails> orderDetails,double bonusPoint){
         Connection cnnct = null;
         Statement stmt = null;
         PreparedStatement pStmnt = null;
@@ -125,6 +125,8 @@ public class OrderDB {
                 OrderDetails od = orderDetails.get(i);
                 stmt.addBatch("INSERT INTO OrderDetails VALUES (null,'" + orderId + "','" + od.getItemId() + "','" + od.getItemName() + "','" + od.getQuantity() + "','" + od.getBuyPrice() + "','" + od.getDetailsPrice() + "')");
             }
+            
+            stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonusPoint + " WHERE login_id = '" + loginId + "'");
             
             int counts[] = stmt.executeBatch();
             System.out.println("Order Details :" + counts.length);
