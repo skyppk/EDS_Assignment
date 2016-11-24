@@ -19,7 +19,20 @@
     <body>
         <%@include file="menu.jsp" %>
         <script>
-            var loggedin = <%= ((UserInfo) (session.getAttribute("userInfo"))).getLoginId() != null%>;
+            <% UserInfo uif = (UserInfo) (session.getAttribute("userInfo"));%>
+                
+            var loggedin = <%= uif.getLoginId() != null%>;
+            var address = "<%= uif.getAddress()%>";
+            $(function(){
+                if(loggedin)
+                    $('#address').val(address);
+                $('#deliveryRdo').on('click',function(){
+                    $('#deliveryAddGroup,#deliveryDateGroup,#deliveryTimeGroup').fadeIn(500);
+                });
+                $('#sPickRdo').on('click',function(){
+                    $('#deliveryAddGroup,#deliveryDateGroup,#deliveryTimeGroup').fadeOut(500);
+                });
+            });
             function checkStatus() {
                 if (loggedin) {
                     $.ajax({

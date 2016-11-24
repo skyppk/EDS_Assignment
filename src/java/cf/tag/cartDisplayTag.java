@@ -95,20 +95,24 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("<div class=\"panel-body\"\">");
                     out.println("<div class=\"row\"><h4><small>Total Price: </small><span id=\"totalPriceTag\">" + sTotal+"</span>");
                     out.println("<form action=\"order\" method=\"post\">");
+                    
                     out.println("<div class=\"form-group\">");
                     out.println("<label for=\"deliveryType\">Delivery Type</label><br>");
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"deliveryType\" value=\"delivery\" checked>Delivery</label>");
-                    out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"deliveryType\" value=\"self-pick\" checked>Self-pick</label>");
+                    out.println("<label class=\"radio-inline\"><input id=\"deliveryRdo\" type=\"radio\" name=\"deliveryType\" value=\"delivery\" checked>Delivery</label>");
+                    out.println("<label class=\"radio-inline\"><input id=\"sPickRdo\" type=\"radio\" name=\"deliveryType\" value=\"self-pick\">Self-pick</label>");
                     out.println("</div>");
-                    out.println("<div class=\"form-group\">");
+                    
+                    out.println("<div id=\"deliveryAddGroup\" class=\"form-group\">");
                     out.println("<label for=\"address\">Delivery address</label>");
                     out.println("<input name=\"address\" type=\"address\" class=\"form-control\" id=\"address\">");
                     out.println("</div>");
-                    out.println("<div class=\"form-group\">");
+                    
+                    out.println("<div id=\"deliveryDateGroup\" class=\"form-group\">");
                     out.println("<label for=\"date\">Delivery Date</label>");
                     out.println("<input name=\"date\" type=\"date\" class=\"form-control\" id=\"date\">");
                     out.println("</div>");
-                    out.println("<div class=\"form-group\">");
+                    
+                    out.println("<div id=\"deliveryTimeGroup\" class=\"form-group\">");
                     out.println("<label for=\"time\">Delivery Time:</label><br>");
                     out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"AM\" checked>AM</label>");
                     out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"PM\" checked>PM</label>");
