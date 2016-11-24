@@ -59,13 +59,13 @@ public class ShoppingCartServlet extends HttpServlet {
         }
 
         if ("placeOrder".equalsIgnoreCase(action)) {
-            System.out.println("fuking damn1");
+            //System.out.println("fuking damn1");
             HttpSession session = request.getSession();
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
             ArrayList<OrderDetails> order = cart.getCart();
-            System.out.println("fuckkkkkk" + order);
+            //System.out.println("fuckkkkkk" + order);
             for (OrderDetails o : order) {
-                System.out.println("fuckkkkkk" + o.getItemId());
+                //System.out.println("fuckkkkkk" + o.getItemId());
 
                 ItemInfo info = db.queryItemDetail(o.getItemId());
                 o.setBuyPrice(info.getPrice());

@@ -4,6 +4,7 @@
     Author     : nanasemaru
 --%>
 
+<%@page import="cf.bean.UserInfo"%>
 <%@page import="cf.bean.OrderDetails"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="cf.bean.ShoppingCart"%>
@@ -17,6 +18,31 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
+        <script>
+            var loggedin = <%= ((UserInfo) (session.getAttribute("userInfo"))).getLoginId() != null%>;
+            function checkStatus() {
+                if (loggedin) {
+                    $.ajax({
+                        type: "POST",
+                        url: "order",
+                        data: $('form').serialize()
+                        , success: function (data) {
+
+                        },
+                        dataType: 'json'
+                    }).always(function (data) {
+                        console.log(data);
+                        /**
+                        if (data.status)
+                            //
+                        else
+                            alert('Unable to remove item');
+                            **/
+                    });
+                } else
+                    alert('You must login first!');
+            }
+        </script>
         <div class="container">
             <h2>Place Order</h2>
             <div class="panel panel-default">
