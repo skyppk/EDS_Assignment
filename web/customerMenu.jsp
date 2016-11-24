@@ -99,7 +99,7 @@
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome, <%=userInfo.getFirstName()%><span class="caret"></span></a>
                     <ul class="dropdown-menu inverse-dropdown">
                         <li><a href="profile.jsp">Profile</a></li>
-                        <li><a href="#">Existing Order</a></li>
+                        <li><a href="orderHistory?action=now&id=<%=userInfo.getLoginId()%>">Existing Order</a></li>
                         <li><a href="orderHistory?id=<%=userInfo.getLoginId()%>">History</a></li>
 
                         <!--                        <li role="separator" class="divider"></li>
