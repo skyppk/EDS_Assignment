@@ -75,7 +75,18 @@ public class HandleCustomer extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/newRegister.jsp");
             rd.forward(request, response);
-        } else {
+        }else if ("getEditCustomer".equalsIgnoreCase(action)) {
+// obtain the parameter id;
+                int id = Integer.parseInt(request.getParameter("id"));
+                UserInfo user = db.getUserInfoByid(id);
+                String targetURL = "editUserAccount.jsp";
+                request.setAttribute("user", user);
+                RequestDispatcher rd;
+                rd = getServletContext().getRequestDispatcher("/" + targetURL);
+                rd.forward(request, response);
+            }
+       
+        else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
         }

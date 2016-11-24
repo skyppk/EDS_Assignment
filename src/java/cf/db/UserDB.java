@@ -313,7 +313,7 @@ public class UserDB {
         return isSuccess;
     }
     
-    public boolean editAccountInfo(String loginId,String userStatus,double money, int creditAmount) {
+    public boolean editAccountInfo(String loginId,double money, int creditAmount) {
         Connection cnnct = null;
         Statement stmt = null;
         boolean isSuccess = false;
@@ -321,8 +321,8 @@ public class UserDB {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
             stmt = cnnct.createStatement();
-            stmt.addBatch("UPDATE UserInfo SET user_status = '" + userStatus + "' WHERE login_id = '" + loginId + "'");
-            stmt.addBatch("UPDATE AccountInfo SET money = '" + money + "', credit_amount = '" + creditAmount + "' WHERE login_id = '" + loginId + "'");
+//            stmt.addBatch("UPDATE UserInfo SET user_status = '" + userStatus + "' WHERE login_id = '" + loginId + "'");
+            stmt.addBatch("UPDATE AccountInfo SET money = money + " + money + ", credit_amount = '" + creditAmount + "' WHERE login_id = '" + loginId + "'");
             int counts[] = stmt.executeBatch();
             cnnct.commit();
             System.out.println("Committed " + counts.length);
@@ -414,6 +414,48 @@ public class UserDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, longinId);
             pStmnt.setString(2, pwd);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                user = new UserInfo();
+                user.setId(rs.getInt("id"));
+                user.setLoginId(rs.getString("login_id"));
+                user.setPassword(rs.getString("password"));
+                user.setLastName(rs.getString("last_name"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setSex(rs.getString("sex"));
+                user.setBirthday(rs.getString("birthday"));
+                user.setTel(rs.getString("tel"));
+                user.setAddress(rs.getString("address"));
+                user.setEmail(rs.getString("email"));
+                user.setUserStatus(rs.getString("user_status"));
+                user.setMoney(rs.getDouble("money"));
+                user.setCreditAmount(rs.getInt("credit_amount"));
+                user.setBonusPoints(rs.getDouble("bonus_point"));
+                user.setAccountType(rs.getString("account_type"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return user;
+    }
+    
+    public UserInfo getUserInfoByid(int id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        UserInfo user = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT id, UserInfo.login_id AS login_id, password, last_name, first_name, sex, birthday, tel, address, email, user_status, money, credit_amount, bonus_point, account_type FROM UserInfo INNER JOIN AccountInfo ON UserInfo.login_id = AccountInfo.login_id WHERE id = ? AND user_status = 'ACCEPTED' AND account_type = 'CUSTOMER';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, id);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();
             if (rs.next()) {
