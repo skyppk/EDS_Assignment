@@ -5,6 +5,7 @@
 --%>
 
 <jsp:useBean id="userInfo" class="cf.bean.UserInfo" scope="session" />
+<%@ page errorPage="error.jsp"%>
 <%
     String login = request.getParameter("login");
 %>

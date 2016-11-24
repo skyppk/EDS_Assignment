@@ -6,11 +6,13 @@
 
 <%@page import="cf.bean.OrderInfo"%>
 <%@page import="java.util.ArrayList"%>
+<%@ page errorPage="error.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
     ArrayList<OrderInfo> orders = (ArrayList<OrderInfo>) request.getAttribute("orders");
     System.out.println("damnnn"+orders.size());
+    
 %>
 <html>
     <head>

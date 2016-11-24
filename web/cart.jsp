@@ -1,7 +1,10 @@
-<%@page import="java.util.ArrayList"%>
+    <%@page import="java.util.ArrayList"%>
 <%@page import="cf.bean.OrderDetails"%>
 <%@page import="cf.bean.ShoppingCart"%>
+
+<%@ page errorPage="error.jsp"%>
 <%@taglib uri="/WEB-INF/tlds/cartItem" prefix="cartItem" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +36,7 @@
                                 updateTotal();
                         },
                         dataType: 'json'
-                };
+                });
             }
             function updateTotal() {
                 price = 0;

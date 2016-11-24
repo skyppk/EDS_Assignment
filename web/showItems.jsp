@@ -8,6 +8,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="cf.db.ItemDB"%>
 <%@taglib uri="/WEB-INF/tlds/items" prefix="items" %>
+<%@ page errorPage="error.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ArrayList<ItemInfo> items = (ArrayList<ItemInfo>) request.getAttribute("items");

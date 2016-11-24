@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="accountType" class="java.lang.String" scope="session" />
+<%@ page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
