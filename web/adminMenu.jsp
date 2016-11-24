@@ -4,6 +4,8 @@
     Author     : nanasemaru
 --%>
 <jsp:useBean id="staffInfo" class="cf.bean.StaffInfo" scope="session" />
+
+<%@ page errorPage="error.jsp"%>
 <style>
     .nav a {
         color: #5a5a5a;
