@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,9 +29,12 @@
                             <label for="password">Password:</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-<!--                        <div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
-                        </div>-->
+                        <!--                        <div class="checkbox">
+                                                    <label><input type="checkbox"> Remember me</label>
+                                                </div>-->
+                        <div>
+                            <label style="color: red"><%=message%></label>
+                        </div>
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                 </div>

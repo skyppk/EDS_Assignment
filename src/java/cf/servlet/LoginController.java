@@ -65,6 +65,7 @@ public class LoginController extends HttpServlet {
             user = userDb.getUserInfo(username, password);
             session.setAttribute("accountType", user.getAccountType());
             session.setAttribute("userInfo", user);
+            session.removeAttribute("staffInfo");
             targetURL = "/index.jsp";
         }else if(this.staffDb.isValidUser(username, password)){
             HttpSession session = req.getSession(true);
@@ -72,9 +73,11 @@ public class LoginController extends HttpServlet {
             staff = staffDb.getStaffInfo(username, password);
             session.setAttribute("accountType", staff.getAccountType());
             session.setAttribute("staffInfo", staff);
+            session.removeAttribute("userInfo");
             targetURL = "/index.jsp";
         }
         else {
+            req.setAttribute("message", "Failed Login");
             targetURL = "/login.jsp"; //TODO
         }
         RequestDispatcher rd;
@@ -103,6 +106,7 @@ public class LoginController extends HttpServlet {
         if(session != null){
             session.removeAttribute("userInfo");
             session.removeAttribute("accountType");
+            session.removeAttribute("staffInfo");
             session.invalidate();
         }
         doLogin(req, resp);

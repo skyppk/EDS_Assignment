@@ -50,7 +50,7 @@ public class manageCustomerTag extends SimpleTagSupport {
             out.println("<th>Credit Amount</th>");
             out.println("<th>Bonus Point</th>");
             out.println("<th>User Status</th>");
-            out.println("<th>Action</th>");
+            out.println("<th colspan=\"2\">Action</th>");
             out.println("</tr>");
             if(customers == null){
                 System.out.println("fk you");
@@ -87,8 +87,12 @@ public class manageCustomerTag extends SimpleTagSupport {
                         out.println("<a href=\"product?action=all\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\">ACCEPT</button>");
                         out.println("</a>");
+                    }else if(user.getUserStatus().equalsIgnoreCase("ACCEPTED")){
+                        out.println("<a href=\"product?action=all\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\">ACCEPT</button>");
+                        out.println("</a>");
                     }
-                    
+                    out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
                     
                     
