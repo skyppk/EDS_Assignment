@@ -66,11 +66,11 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println(df.format(item.getBuyPrice()));
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(item.getQuantity());
-                    out.println("</td><td style=\"vertical-align:middle;\">");
+                    out.println("</td><td id='dtprice' style=\"vertical-align:middle;\">");
                     out.println(df.format(item.getDetailsPrice()));
                     if ("cart".equalsIgnoreCase(tagType)) {
                         out.println("</td><td style=\"vertical-align:middle;\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+                        out.println("<button onclick=\"dropItem(" + item.getItemId() + ",$(this))\" type=\"button\" class=\"btn btn-default\">Cancel</button>");
                     }
                     out.println("</td></tr>");
                     total += item.getDetailsPrice();
@@ -88,8 +88,8 @@ public class cartDisplayTag extends SimpleTagSupport {
 
                 if ("cart".equalsIgnoreCase(tagType)) {
                     out.println("<div class=\"panel-body\" style=\"padding-right:20px;\">");
-                    out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small>" + sTotal);
-                    out.println("<small><button type=\"button\" class=\"btn btn-default\" onclick=\"location.href='ShoppingCartServlet?action=placeOrder'\">Order</button></small></h4>");
+                    out.println("<div class=\"row pull-right\"><h4><small>Total Price: </small><span id='totalValue'>" + sTotal);
+                    out.println("</span><small><button type=\"button\" class=\"btn btn-default\" onclick=\"location.href='ShoppingCartServlet?action=placeOrder'\">Order</button></small></h4>");
                     out.println("</div></div></div>");
                 } else if ("placeOrder".equalsIgnoreCase(tagType)) {
                     out.println("<div class=\"panel-body\"\">");

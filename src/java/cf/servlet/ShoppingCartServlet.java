@@ -36,7 +36,7 @@ public class ShoppingCartServlet extends HttpServlet {
 
         db = new ItemDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
@@ -46,41 +46,103 @@ public class ShoppingCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        switch (action) {
+            case "pushItem":
+                doPushItem(request, response);
+                break;
+            case "dropItem":
+                doDropItem(request, response);
+                break;
+            case "modifyQuantity":
+                break;
+
+        }
+
         if ("placeOrder".equalsIgnoreCase(action)) {
             System.out.println("fuking damn1");
             HttpSession session = request.getSession();
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
             ArrayList<OrderDetails> order = cart.getCart();
-            System.out.println("fuckkkkkk"+order);
+            System.out.println("fuckkkkkk" + order);
             for (OrderDetails o : order) {
-                System.out.println("fuckkkkkk"+o.getItemId());
-                
+                System.out.println("fuckkkkkk" + o.getItemId());
+
                 ItemInfo info = db.queryItemDetail(o.getItemId());
                 o.setBuyPrice(info.getPrice());
                 o.setDetailsPrice(info.getPrice() * o.getQuantity());
             }
             session.removeAttribute("cart");
             session.setAttribute("cart", cart);
-            
+
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/placeOrder.jsp");
             rd.forward(request, response);
-        } else {
-            
+        }
+//        } else {
+//
+//            String itemId = request.getParameter("itemId");
+//            String itemName = request.getParameter("itemName");
+//            double itemPrice = Double.parseDouble(request.getParameter("itemPrice"));
+//            int quantity = Integer.parseInt(request.getParameter("quantity"));
+//            System.out.println("damnnnnnnnnnn" + itemId);
+//            HttpSession session = request.getSession();
+//            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+//            if (cart == null) {
+//                cart = new ShoppingCart();
+//            }
+//            cart.getCart().add(new OrderDetails(itemId, itemName, quantity, itemPrice, quantity * itemPrice, "pig.png"));
+//            //response.getWriter().println(test);
+//            session.setAttribute("cart", cart);
+//        }
+    }
+
+    private void doPushItem(HttpServletRequest request, HttpServletResponse response) {
+        String itemId = request.getParameter("itemId");
+        String itemName = request.getParameter("itemName");
+        double itemPrice = Double.parseDouble(request.getParameter("itemPrice"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        HttpSession session = request.getSession();
+        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ShoppingCart();
+        }
+        cart.getCart().add(new OrderDetails(itemId, itemName, quantity, itemPrice, quantity * itemPrice, "pig.png"));
+        //response.getWriter().println(test);
+        session.setAttribute("cart", cart);
+
+    }
+
+    private void doDropItem(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
             String itemId = request.getParameter("itemId");
-            String itemName = request.getParameter("itemName");
-            double itemPrice = Double.parseDouble(request.getParameter("itemPrice"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            System.out.println("damnnnnnnnnnn"+itemId);
             HttpSession session = request.getSession();
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-            if (cart == null) {
-                cart = new ShoppingCart();
+            if (cart != null) {
+                ArrayList<OrderDetails> arr = cart.getCart();
+                for (OrderDetails element : arr) {
+                    if (element.getItemId().equals(itemId)) {
+                        arr.remove(element);
+                        break;
+                    }
+                }
+                makeResponse(response, true, null);
+
+            } else {
+                makeResponse(response, false, null);
             }
-            cart.getCart().add(new OrderDetails(itemId, itemName, quantity, itemPrice, quantity * itemPrice, "pig.png"));
-            //response.getWriter().println(test);
-            session.setAttribute("cart", cart);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+    }
+    
+    
+    private void makeResponse(HttpServletResponse response, boolean status, String json)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.print("{status:" + status + (json != null ? json : "") + "}");
     }
 
     @Override

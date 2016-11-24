@@ -11,6 +11,40 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
+                <script>
+            $(function () {
+
+            });
+            function dropItem(id, element) {
+
+                row = element.parent().parent();
+                $.ajax({
+                    type: "POST",
+                    url: "ShoppingCartServlet",
+                    data: {
+                        action: 'dropItem',
+                        itemId: id
+                    }, success: function (data) {
+
+                    },
+                    dataType: 'json'
+                }).always(function (data) {
+                    if (data.status)
+                        row.fadeOut(500).remove();
+                    else
+                        alert('Unable to remove item');
+                    updateTotal();
+                    
+                });
+            }
+            function updateTotal() {
+                price = 0;
+                $.each($("td[id='dtprice']"), function (key, value) {
+                    price += Number($(value).text().replace('$','').replace(',',''));
+                });
+                $('#totalValue').text('$ '+price);
+            }
+        </script>
         <div class="container">
             <h2>Shopping Cart</h2>
             <div class="panel panel-default">

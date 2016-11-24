@@ -66,6 +66,7 @@
                 });
                 $('#addToCart').on('click',function(){
                    addToCart({
+                       action : 'pushItem',
                        itemId : '<%=item.getItemId()%>',
                        itemName : '<%=item.getItemName()%>',
                        itemPrice : <%=item.getPrice()%>,
