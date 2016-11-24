@@ -4,6 +4,7 @@
     Author     : nanasemaru
 --%>
 
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,20 +18,26 @@
             <h2>Edit Profile</h2>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="#">
+                    <form method="post" action="editCustomer">
                         <div class="form-group">
-                            <label for="oldPwd">Old Password</label>
-                            <input type="password" class="form-control" id="oldPwd" name="oldPwd" required>
+                            <label for="tel">Tel</label>
+                            <input type="tel" class="form-control" id="tel" name="tel" value="<%=userInfo.getTel()%>" required>
                         </div>
                         <div class="form-group">
-                            <label for="newPwd1">New Password</label>
-                            <input type="password" class="form-control" id="newPwd1" name="newPwd1" required>
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<%=userInfo.getEmail()%>" required>
                         </div>
                         <div class="form-group">
-                            <label for="newPwd2">Confirm New Password</label>
-                            <input type="password" class="form-control" id="newPwd2" name="newPwd2" required>
+                            <label for="address">Address</label>
+                            <input type="address" class="form-control" id="address" name="address" value="<%=userInfo.getAddress()%>" required>
+                        </div>
+                        <div>
+                            <%=message%>
                         </div>
                         <div class="form-inline pull-right">
+                            <input type="hidden" name="action" value="profile">
+                            <input type="hidden" name="user" value="<%=userInfo.getLoginId()%>">
+                            <input type="hidden" name="pwd" value="<%=userInfo.getPassword()%>">
                             <button type="reset" class="btn btn-default" id="pwd">Reset</button>
                             <button type="submit" class="btn btn-default" id="profile">Update Password</button>
                         </div>

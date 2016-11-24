@@ -53,11 +53,17 @@ public class EditCustomer extends HttpServlet {
             String oldPwd = request.getParameter("oldPwd");
             String newPwd1 = request.getParameter("newPwd1");
             String newPwd2 = request.getParameter("newPwd2");
-            System.out.println(user+oldPwd);
+            System.out.println(user + oldPwd);
             if (db.isValidUser(user, oldPwd)) {
                 if (newPwd1.equals(newPwd2)) {
-                    if (db.editPassword(user, newPwd1))
+                    if (db.editPassword(user, newPwd1)) {
+                        HttpSession session = request.getSession(true);
+                        UserInfo info = new UserInfo();
+                        info = db.getUserInfo(user, newPwd1);
+                        session.removeAttribute("userInfo");
+                        session.setAttribute("userInfo", info);
                         request.setAttribute("message", "<label style=\"color: green\">Password Updated</label>");
+                    }
                 } else {
                     request.setAttribute("message", "<label style=\"color: red\">Password doesn't match the confirmation</label>");
                 }
@@ -73,13 +79,25 @@ public class EditCustomer extends HttpServlet {
 //            rd.forward(request, response);
         } else if ("profile".equalsIgnoreCase(action)) {
             System.out.println("PROFILE");
-//            if(allUsers == null){
-//                System.out.println("fk you!");
-//            }
-//            for(UserInfo ui: allUsers){
-//                System.out.println("fkkkkk" + ui.getLoginId());
-//            }
+            String user = request.getParameter("user");
+            String pwd = request.getParameter("pwd");
+            String tel = request.getParameter("tel");
+            String email = request.getParameter("email");
+            String address = request.getParameter("address");
 
+            if (db.editUserInfo(user, tel, address, email)) {
+                HttpSession session = request.getSession(true);
+                        UserInfo info = new UserInfo();
+                        info = db.getUserInfo(user, pwd);
+                        session.removeAttribute("userInfo");
+                        session.setAttribute("userInfo", info);
+                request.setAttribute("message", "<label style=\"color: green\">Information Changed</label>");
+            } else {
+                request.setAttribute("message", "<label style=\"color: red\">Edit Failed</label>");
+            }
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/editProfile.jsp");
+            rd.forward(request, response);
 //            request.setAttribute("newRegister", "");
 //            RequestDispatcher rd;
 //            rd = getServletContext().getRequestDispatcher("/newRegister.jsp");

@@ -17,7 +17,7 @@
             <h2>Profile</h2>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="editProfile.jsp">
+                    <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Login ID</label>
                             <div class="col-sm-10">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-inline pull-right">
                             <button type="button" class="btn btn-default" onclick="location.href = 'changePassword.jsp'">Change Password</button>
-                            <button type="submit" class="btn btn-default">Edit Profile</button>
+                            <button type="button" class="btn btn-default" onclick="location.href = 'editProfile.jsp'">Edit Profile</button>
                         </div>
                     </form>
                 </div>
