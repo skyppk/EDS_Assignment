@@ -93,8 +93,8 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</div></div></div>");
                 } else if ("placeOrder".equalsIgnoreCase(tagType)) {
                     out.println("<div class=\"panel-body\"\">");
-                    out.println("<div class=\"row\"><h4><small>Total Price: </small>" + sTotal);
-                    out.println("<form>");
+                    out.println("<div class=\"row\"><h4><small>Total Price: </small><span id=\"totalPriceTag\">" + sTotal+"</span>");
+                    out.println("<form action=\"order\" method=\"post\">");
                     out.println("<div class=\"form-group\">");
                     out.println("<label for=\"deliveryType\">Delivery Type</label><br>");
                     out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"deliveryType\" value=\"delivery\" checked>Delivery</label>");
@@ -102,18 +102,20 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</div>");
                     out.println("<div class=\"form-group\">");
                     out.println("<label for=\"address\">Delivery address</label>");
-                    out.println("<input type=\"address\" class=\"form-control\" id=\"address\">");
+                    out.println("<input name=\"address\" type=\"address\" class=\"form-control\" id=\"address\">");
                     out.println("</div>");
                     out.println("<div class=\"form-group\">");
                     out.println("<label for=\"date\">Delivery Date</label>");
-                    out.println("<input type=\"date\" class=\"form-control\" id=\"date\">");
+                    out.println("<input name=\"date\" type=\"date\" class=\"form-control\" id=\"date\">");
                     out.println("</div>");
                     out.println("<div class=\"form-group\">");
                     out.println("<label for=\"time\">Delivery Time:</label><br>");
                     out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"AM\" checked>AM</label>");
                     out.println("<label class=\"radio-inline\"><input type=\"radio\" name=\"time\" value=\"PM\" checked>PM</label>");
+                    out.println("<input type=\"hidden\" id=\"totalPrice\" name=\"total\" value=\""+total+"\">");
                     out.println("</div>");
-                    out.println("<button type=\"submit\" class=\"btn btn-default\">Submit</button>");
+                    
+                    out.println("<button onclick=\"checkStatus()\" type=\"button\" class=\"btn btn-default\">Submit</button>");
                     out.println("</div>");
                 }
             } else {
