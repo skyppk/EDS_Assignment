@@ -84,11 +84,11 @@ public class manageCustomerTag extends SimpleTagSupport {
                     out.println(user.getUserStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     if(user.getUserStatus().equalsIgnoreCase("NEW") || user.getUserStatus().equalsIgnoreCase("DECLINE")){
-                        out.println("<a href=\"product?action=all\">");
+                        out.println("<a href=\"editCustomer?action=newUser&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
                         out.println("</td><td style=\"vertical-align:middle;\">");
-                        out.println("<a href=\"product?action=all\">");
+                        out.println("<a href=\"editCustomer?action=declineUser&id=" + user.getId() + "&userStatus=DECLINE\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Decline</button>");
                         out.println("</a>");
                     }else if(user.getUserStatus().equalsIgnoreCase("ACCEPTED")){

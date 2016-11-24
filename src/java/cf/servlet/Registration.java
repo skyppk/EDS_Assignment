@@ -21,6 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Registration", urlPatterns = {"/registration"})
 public class Registration extends HttpServlet {
 
+    private UserDB db;
+
+    @Override
+    public void init() throws ServletException {
+        String dbUser = this.getServletContext().getInitParameter("dbUser");
+        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
+        String dbUrl = this.getServletContext().getInitParameter("dbUrl");
+        
+        db = new UserDB(dbUrl, dbUser, dbPassword);
+    }
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -40,8 +51,7 @@ public class Registration extends HttpServlet {
         out.println("<html><head><title>Registration</title></head><body>");
         req.getRequestDispatcher("/menu.jsp").include(req, resp);
 
-        UserDB db = new UserDB("jdbc:mysql://localhost:3306/ESD_Assignment", "root", "");
-        out.println("<div class=\"container\">");
+        out.println("<div class=\"container\"><p>");
         if (db.checkEmail(email)) {
             if (db.addUserInfo(lastName, firstName, sex, birthday, tel, address, email)) {
                 out.print("The registration is successed.");
@@ -57,6 +67,6 @@ public class Registration extends HttpServlet {
             out.print("The email is already existed.");
             out.print("<p><a href=\"javascript:history.back()\">Back to Registration Form</a>");
         }
-        out.println("</div>");
+        out.println("</p></div>");
     }
 }
