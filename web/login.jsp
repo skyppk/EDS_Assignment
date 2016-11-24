@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<%@ page errorPage="error.jsp"%>
 
 <!DOCTYPE html>
 <html>

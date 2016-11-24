@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="cf.bean.UserInfo"%>
+<%@ page errorPage="error.jsp"%>
 <%@taglib uri="/WEB-INF/tlds/manageCustomer" prefix="managecustomer" %>
 <jsp:useBean id="newRegister" class="java.util.ArrayList<UserInfo>" scope="request"/>
 <!DOCTYPE html>

@@ -10,6 +10,7 @@
 <%@page import="cf.bean.ShoppingCart"%>
 <%@taglib uri="/WEB-INF/tlds/cartItem" prefix="cartItem" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,7 +44,7 @@
                             if (data.status){
                                 alert("Order successful\n\nRedirecting to order history...");
                                 // T O D O : ORDER HISTORY JSP
-                                //window.location = "orderhistory.jsp"
+                                window.location = "index.jsp";
                             }
                             else {
                                 //alert(data.msg+"\n\nRedirecting to home page...");

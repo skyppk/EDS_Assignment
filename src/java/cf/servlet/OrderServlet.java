@@ -13,6 +13,7 @@ import cf.db.OrderDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -103,7 +104,7 @@ private OrderDB db;
           
     }
     private String generateOrderID(){
-        return ""+Math.floor(100000 + Math.random() * 900000);
+        return UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
     }
 
     @Override
