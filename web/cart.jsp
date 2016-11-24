@@ -19,23 +19,21 @@
 
                 row = element.parent().parent();
                 $.ajax({
-                    type: "POST",
-                    url: "ShoppingCartServlet",
-                    data: {
-                        action: 'dropItem',
-                        itemId: id
-                    }, success: function (data) {
-
-                    },
-                    dataType: 'json'
-                }).always(function (data) {
-                    if (data.status)
-                        row.fadeOut(500).remove();
-                    else
-                        alert('Unable to remove item');
-                    updateTotal();
-
-                });
+                type: "POST",
+                        url: "ShoppingCartServlet",
+                        data: {
+                            action: 'dropItem',
+                            itemId: id
+                        },
+                        success: function (data) {
+                            if (data.status)
+                                row.fadeOut(500).remove();
+                            else
+                                alert('Unable to remove item');
+                                updateTotal();
+                        },
+                        dataType: 'json'
+                };
             }
             function updateTotal() {
                 price = 0;

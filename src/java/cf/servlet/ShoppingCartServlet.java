@@ -142,7 +142,7 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        out.print("{status:" + status + (json != null ? json : "") + "}");
+        out.print("{\"status\":" + status + (json != null ? json : "") + "}");
     }
 
     @Override
