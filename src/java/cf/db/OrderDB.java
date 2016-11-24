@@ -12,7 +12,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -55,7 +57,7 @@ public class OrderDB {
                     + "order_id varchar(20) NOT NULL,"
                     + "login_id varchar(25) NOT NULL,"
                     + "delivery_type varchar(15) NOT NULL,"
-                    + "delivery_date Date DEFAULT sysdate,"
+                    + "delivery_date Date,"
                     + "delivery_time varchar(2),"
                     + "delivery_address varchar(255),"
                     + "order_price double NOT NULL,"
@@ -112,7 +114,10 @@ public class OrderDB {
         Connection cnnct = null;
         Statement stmt = null;
         PreparedStatement pStmnt = null;
-        String deliveryDay = deliveryDate != null ? deliveryDate : "DEFAULT";
+        Date today = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String now = formatter.format(today);
+        String deliveryDay = deliveryDate != null ? deliveryDate : now;
         boolean isSuccess = false;
         try{
             cnnct = getConnection();
