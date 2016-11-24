@@ -62,7 +62,8 @@ public class CreateTable {
         userDb.addUserAccountInfo(1, "syw", "syw");
 
         userDb.addUserInfo("Fai", "Fai Fai", "M", "1999-3-3", "12345555", "fai", "fai@gmail.com");
-
+        userDb.addUserInfo("God", "Big", "M", "1998-3-3", "16645555", "biggod", "biggod@gmail.com");
+        userDb.addUserInfo("skyppk", "lee", "M", "1991-4-3", "12345555", "street", "bilylee2000@yahoo.com.hk");
 //        addStaffInfo(String loginId,String password,String lastName, String firstName,String sex, String tel, String email, String position,String accountType)
         staffDb.addStaffInfo("ting", "ting", "Chung", "Yin Ting", "F", "33492568", "ting@gmai.com", "Manager", "ADMIN");
 

@@ -175,7 +175,7 @@ public class OrderDB {
                 stmt.addBatch("INSERT INTO OrderDetails VALUES (null,'" + orderId + "','" + od.getItemId() + "','" + od.getItemName() + "','" + od.getQuantity() + "','" + od.getBuyPrice() + "','" + od.getDetailsPrice() + "')");
             }
             
-            stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonusPoint + " WHERE login_id = '" + loginId + "'");
+            stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonusPoint + " , money = money - "+ orderPrice + "WHERE login_id = '" + loginId + "'");
             
             int counts[] = stmt.executeBatch();
             System.out.println("Order Details :" + counts.length);

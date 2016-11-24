@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  *
@@ -143,10 +144,11 @@ public class UserDB {
         return isSuccess;
     }
 
-    public boolean addUserAccountInfo(int id, String loginId,String password) {
+    public boolean addUserAccountInfo(int id,String loginId,String password) {
         Connection cnnct = null;
         Statement stmt = null;
         boolean isSuccess = false;
+        
         try {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
@@ -220,6 +222,39 @@ public class UserDB {
             cnnct.setAutoCommit(false);
             stmt = cnnct.createStatement();
             stmt.addBatch("UPDATE AccountInfo SET password = '" + newPassword + "' WHERE login_id = '" + loginId + "'");
+            int counts[] = stmt.executeBatch();
+            cnnct.commit();
+            System.out.println("Committed " + counts.length);
+            stmt.close();
+            cnnct.close();
+            isSuccess = true;
+        } catch (SQLException ex) {
+            if(cnnct != null){
+                try{
+                    cnnct.rollback();
+                }catch(SQLException ex1){
+                    ex1.printStackTrace();
+                }
+            }
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean changeStatus(int id,String userStatus) {
+        Connection cnnct = null;
+        Statement stmt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            cnnct.setAutoCommit(false);
+            stmt = cnnct.createStatement();
+            stmt.addBatch("UPDATE UserInfo SET user_status = '" + userStatus + "' WHERE id = '" + id + "'");
             int counts[] = stmt.executeBatch();
             cnnct.commit();
             System.out.println("Committed " + counts.length);
@@ -461,7 +496,7 @@ public class UserDB {
         ArrayList<UserInfo> customers = new ArrayList();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM UserInfo WHERE user_status = 'NEW'";
+            String preQueryStatement = "SELECT * FROM UserInfo WHERE user_status = 'NEW' OR user_status = 'DECLINE'";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = null;
             rs = pStmnt.executeQuery();

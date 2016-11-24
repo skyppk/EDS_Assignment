@@ -10,6 +10,7 @@ import cf.db.UserDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -102,7 +103,32 @@ public class EditCustomer extends HttpServlet {
 //            RequestDispatcher rd;
 //            rd = getServletContext().getRequestDispatcher("/newRegister.jsp");
 //            rd.forward(request, response);
-        } else {
+        } else if ("newUser".equalsIgnoreCase(action)) {
+            System.out.println("New User Account :" );
+            int id = Integer.parseInt(request.getParameter("id"));
+            String loginId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
+            String password = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
+            while(!db.addUserAccountInfo(id,loginId,password)){
+                System.out.println(loginId);
+                System.out.println(password);
+                loginId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
+                password = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
+            }
+            response.sendRedirect("handleCustomer?action=listNew");
+            
+        } else if ("declineUser".equalsIgnoreCase(action)) {
+            System.out.println("New User Account :" );
+            int id = Integer.parseInt(request.getParameter("id"));
+            String status = request.getParameter("userStatus");
+            System.out.println("decline user id :" + id);
+            System.out.println("decline user status :" + status);
+            if(db.changeStatus(id, status)){
+                response.sendRedirect("handleCustomer?action=listNew");
+            }
+            
+            
+        } 
+        else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
         }
