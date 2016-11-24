@@ -34,7 +34,7 @@ public class manageCustomerTag extends SimpleTagSupport {
         try {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
-            DecimalFormat df = new DecimalFormat("$ #,##0.00");
+            DecimalFormat df = new DecimalFormat("$ #,##0.0");
             
             out.println("<div class=\"table-responsive\"><table class=\"table\">");
             out.println("<tr>");
@@ -83,25 +83,29 @@ public class manageCustomerTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(user.getUserStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    if(user.getUserStatus().equalsIgnoreCase("NEW") || user.getUserStatus().equalsIgnoreCase("DECLINE")){
+                    if(user.getUserStatus().equalsIgnoreCase("NEW")){
                         out.println("<a href=\"editCustomer?action=newUser&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
                         out.println("</td><td style=\"vertical-align:middle;\">");
-                        out.println("<a href=\"editCustomer?action=declineUser&id=" + user.getId() + "&userStatus=DECLINE\">");
+                        out.println("<a href=\"editCustomer?action=decline&id=" + user.getId() + "&userStatus=DECLINE\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Decline</button>");
                         out.println("</a>");
                     }else if(user.getUserStatus().equalsIgnoreCase("ACCEPTED")){
-                        out.println("<a href=\"product?action=all\">");
+                        out.println("<a href=\"handleCustomer?action=getEditCustomer&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Edit</button>");
                         out.println("</a>");
                         out.println("</td><td style=\"vertical-align:middle;\">");
-                        out.println("<a href=\"product?action=all\">");
+                        out.println("<a href=\"editCustomer?action=updateStatus&id=" + user.getId() + "&userStatus=BLOCK\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Block</button>");
                         out.println("</a>");
                     }else if(user.getUserStatus().equalsIgnoreCase("BLOCK")){
-                        out.println("<a href=\"product?action=all\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Renew</button>");
+                        out.println("<a href=\"editCustomer?action=updateStatus&id=" + user.getId() + "&userStatus=ACCEPTED\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
+                        out.println("</a>");
+                    }else if(user.getUserStatus().equalsIgnoreCase("DECLINE")){
+                        out.println("<a href=\"editCustomer?action=newUser&id=" + user.getId() + "\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
                     }
          

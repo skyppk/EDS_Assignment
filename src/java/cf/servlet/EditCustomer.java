@@ -114,9 +114,10 @@ public class EditCustomer extends HttpServlet {
                 loginId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
                 password = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
             }
-            response.sendRedirect("handleCustomer?action=listNew");
+            response.sendRedirect("handleCustomer?action=list");
             
-        } else if ("declineUser".equalsIgnoreCase(action)) {
+        } 
+          else if ("decline".equalsIgnoreCase(action)) {
             System.out.println("New User Account :" );
             int id = Integer.parseInt(request.getParameter("id"));
             String status = request.getParameter("userStatus");
@@ -124,10 +125,33 @@ public class EditCustomer extends HttpServlet {
             System.out.println("decline user status :" + status);
             if(db.changeStatus(id, status)){
                 response.sendRedirect("handleCustomer?action=listNew");
-            }
+            }  
             
+        } else if ("updateStatus".equalsIgnoreCase(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String status = request.getParameter("userStatus");
+            System.out.println("update user id :" + id);
+            System.out.println("update user status :" + status);
+            if(db.changeStatus(id, status)){
+                response.sendRedirect("handleCustomer?action=list");
+            }  
             
-        } 
+        } else if ("cancle".equalsIgnoreCase(action)) {
+            
+                response.sendRedirect("handleCustomer?action=list");
+            
+        }else if ("Confirm".equalsIgnoreCase(action)) {
+            String loginId = request.getParameter("loginId");
+            double money = Double.parseDouble(request.getParameter("money"));
+            int credit = Integer.parseInt(request.getParameter("credit"));
+            
+//            System.out.println("update user id :" + id);
+//            System.out.println("update user status :" + status);
+            if(db.editAccountInfo(loginId, money, credit)){
+                response.sendRedirect("handleCustomer?action=list");
+            }  
+            
+        }  
         else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
