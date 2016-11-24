@@ -149,8 +149,8 @@
             <li><a href="index.jsp">Home</a></li>
             <li><a href="product?action=Dress">Dresses</a></li>
             <li><a href="product?action=Jacket">Jackets</a></li>
-            <li><a href="product?action=Accessories">Accessories</a></li>
-            <li><a href="">Contact Us</a></li>
+            <li><a href="product?action=Accessory">Accessories</a></li>
+            <li><a href="contactUs.jsp">Contact Us</a></li>
         </ul>
     </div>
 </div>

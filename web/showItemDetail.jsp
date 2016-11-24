@@ -35,7 +35,7 @@
                     Description:
                     <p class="lead"><%=item.getDescriptions()%></p>
                     <label for="quantity">Quantity: </label>
-                    <div class="input-group col-xs-3">
+                    <div class="input-group col-xs-4">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default" id="decrease">
                                 <span>-</span>

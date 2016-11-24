@@ -54,7 +54,7 @@ public class HandleItem extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);
-        } else if ("Dress".equalsIgnoreCase(action)||"Jacket".equalsIgnoreCase(action)||"Accessories".equalsIgnoreCase(action)) {
+        } else if ("Dress".equalsIgnoreCase(action)||"Jacket".equalsIgnoreCase(action)||"Accessory".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.selectItemByCategory(action);
             request.setAttribute("items", items);
             RequestDispatcher rd;
