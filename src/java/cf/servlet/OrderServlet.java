@@ -61,7 +61,8 @@ private OrderDB db;
                     order
             );
             **/
-            if(checkBalance(info,Double.parseDouble(request.getParameter("total")))){
+            double price = Double.parseDouble(request.getParameter("total"));
+            if(checkBalance(info,price)){
                 boolean status = db.addOrderInfo(
                         generateOrderID(),
                         info.getLoginId(),
@@ -69,27 +70,31 @@ private OrderDB db;
                         request.getParameter("date"),
                         request.getParameter("time"),
                         request.getParameter("address"),
-                        Double.parseDouble(request.getParameter("total")),
-                        order
+                        price,
+                        order//,
+                        //getBonus(price)
                 );
                 if(status)
                     makeResponse(response,true,null);
                 else
-                    makeResponse(response,false,"{\"msg\": \"database error\"}");
+                    makeResponse(response,false,"\"msg\": \"Database error\"");
                 /**
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
                 if(status)
                     rd.forward(request, response);**/
             }
             else
-                makeResponse(response,false,"{\"msg\":\"insufficient balance\"}");
+                makeResponse(response,false,"\"msg\":\"Insufficient balance in your account\"");
           
+    }
+    private double getBonus(double price){
+        return (price > 2000 ? price * (5/100) : 0);
     }
      private void makeResponse(HttpServletResponse response, boolean status, String json)
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        out.print("{status:" + status + (json != null ? json : "") + "}");
+        out.print("{\"status\":" + status + (json != null ? ","+json : "") + "}");
     }
     private boolean checkBalance(UserInfo uinfo,double price){
         double balance = uinfo.getMoney();

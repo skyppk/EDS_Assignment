@@ -27,17 +27,17 @@
                         url: "order",
                         data: $('form').serialize()
                         , success: function (data) {
-
+                            if (data.status){
+                                alert("Order successful\n\nRedirecting to order history...");
+                                // T O D O : ORDER HISTORY JSP
+                                //window.location = "orderhistory.jsp"
+                            }
+                            else {
+                                alert(data.msg+"\n\nRedirecting to home page...");
+                                window.location = "index.jsp";
+                            }
                         },
                         dataType: 'json'
-                    }).always(function (data) {
-                        console.log(data);
-                        /**
-                        if (data.status)
-                            //
-                        else
-                            alert('Unable to remove item');
-                            **/
                     });
                 } else
                     alert('You must login first!');

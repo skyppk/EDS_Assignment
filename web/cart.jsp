@@ -11,7 +11,7 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
-                <script>
+        <script>
             $(function () {
 
             });
@@ -19,30 +19,28 @@
 
                 row = element.parent().parent();
                 $.ajax({
-                    type: "POST",
-                    url: "ShoppingCartServlet",
-                    data: {
-                        action: 'dropItem',
-                        itemId: id
-                    }, success: function (data) {
-
-                    },
-                    dataType: 'json'
-                }).always(function (data) {
-                    if (data.status)
-                        row.fadeOut(500).remove();
-                    else
-                        alert('Unable to remove item');
-                    updateTotal();
-                    
-                });
+                type: "POST",
+                        url: "ShoppingCartServlet",
+                        data: {
+                            action: 'dropItem',
+                            itemId: id
+                        },
+                        success: function (data) {
+                            if (data.status)
+                                row.fadeOut(500).remove();
+                            else
+                                alert('Unable to remove item');
+                                updateTotal();
+                        },
+                        dataType: 'json'
+                };
             }
             function updateTotal() {
                 price = 0;
                 $.each($("td[id='dtprice']"), function (key, value) {
-                    price += Number($(value).text().replace('$','').replace(',',''));
+                    price += Number($(value).text().replace('$', '').replace(',', ''));
                 });
-                $('#totalValue').text('$ '+price);
+                $('#totalValue').text('$ ' + price);
             }
         </script>
         <div class="container">
