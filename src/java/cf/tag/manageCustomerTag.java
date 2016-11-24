@@ -83,17 +83,28 @@ public class manageCustomerTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(user.getUserStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    if(user.getUserStatus().equalsIgnoreCase("NEW")){
+                    if(user.getUserStatus().equalsIgnoreCase("NEW") || user.getUserStatus().equalsIgnoreCase("DECLINE")){
                         out.println("<a href=\"product?action=all\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\">ACCEPT</button>");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
+                        out.println("</a>");
+                        out.println("</td><td style=\"vertical-align:middle;\">");
+                        out.println("<a href=\"product?action=all\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Decline</button>");
                         out.println("</a>");
                     }else if(user.getUserStatus().equalsIgnoreCase("ACCEPTED")){
                         out.println("<a href=\"product?action=all\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\">ACCEPT</button>");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Edit</button>");
+                        out.println("</a>");
+                        out.println("</td><td style=\"vertical-align:middle;\">");
+                        out.println("<a href=\"product?action=all\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Block</button>");
+                        out.println("</a>");
+                    }else if(user.getUserStatus().equalsIgnoreCase("BLOCK")){
+                        out.println("<a href=\"product?action=all\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Renew</button>");
                         out.println("</a>");
                     }
-                    out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println("<button type=\"button\" class=\"btn btn-default\">Cancel</button>");
+         
                     
                     
                     out.println("</td></tr>");
