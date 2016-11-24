@@ -51,12 +51,16 @@ public class HandleItem extends HttpServlet {
         if ("all".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.selectAvailableItem();
             request.setAttribute("items", items);
+            request.setAttribute("keyword", "");
+            request.setAttribute("type", action);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);
         } else if ("Dress".equalsIgnoreCase(action)||"Jacket".equalsIgnoreCase(action)||"Accessory".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.selectItemByCategory(action);
             request.setAttribute("items", items);
+            request.setAttribute("keyword", "");
+            request.setAttribute("type", action);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);

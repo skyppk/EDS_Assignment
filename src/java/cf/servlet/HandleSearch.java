@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nanasemaru
  */
-@WebServlet(urlPatterns={"/searchItem"})
+@WebServlet(urlPatterns = {"/searchItem"})
 public class HandleSearch extends HttpServlet {
-    
+
     private ItemDB db;
 
     public void init() {
@@ -47,21 +47,49 @@ public class HandleSearch extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String keyword = request.getParameter("keyword");
+        String type = request.getParameter("type");
         if ("all".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.searchItemByInput(keyword);
             request.setAttribute("items", items);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("type", action);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);
-        } else if ("Dress".equalsIgnoreCase(action)||"Jacket".equalsIgnoreCase(action)||"Accessory".equalsIgnoreCase(action)) {
+        } else if ("Dress".equalsIgnoreCase(action) || "Jacket".equalsIgnoreCase(action) || "Accessory".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.searchItemByInputFilter(action, keyword);
             request.setAttribute("items", items);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("type", action);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);
         } else if ("Designer".equalsIgnoreCase(action)) {
             ArrayList<ItemInfo> items = db.searchItemByDesigner(keyword);
             request.setAttribute("items", items);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("type", action);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/showItems.jsp");
+            rd.forward(request, response);
+        } else if ("asc".equalsIgnoreCase(action)||"desc".equalsIgnoreCase(action)) {
+            ArrayList<ItemInfo> items;
+            if ("Designer".equalsIgnoreCase(type)) {
+                if ("all".equalsIgnoreCase(type)) {
+                    items = db.searchAllItemBySortingDesigner(keyword, action);
+                } else {
+                    items = db.searchItemBySortingDesigner(type, keyword, action);
+                }
+            } else {
+                if ("all".equalsIgnoreCase(type)) {
+                    items = db.searchAllItemBySorting(keyword, action);
+                } else {
+                    items = db.searchItemBySorting(type, keyword, action);
+                }
+            }
+            request.setAttribute("items", items);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("type", type);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/showItems.jsp");
             rd.forward(request, response);
