@@ -158,12 +158,12 @@ public class GiftDB {
                 throw new SQLException();
             }            
             stmt.addBatch("INSERT INTO BonusHistory (login_id,gift_id,gift_descriptions,gift_img,used_point)"
-                    +"VALUES ("+
-                            info.getLoginId()+","+
-                            item.getGiftID()+","+
-                            item.getDesc()+","+
-                            item.getImgsrc()+","+
-                            item.getPointRequired()+
+                    +" VALUES ("+
+                            "'"+info.getLoginId()+"',"+
+                            "'"+item.getGiftID()+"',"+
+                            "'"+item.getDesc()+"',"+
+                            "'"+item.getImgsrc()+"',"+
+                            "'"+item.getPointRequired()+"'"+
                     ")");
             
             int counts[] = stmt.executeBatch();

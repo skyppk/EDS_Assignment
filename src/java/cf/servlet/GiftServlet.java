@@ -75,13 +75,13 @@ public class GiftServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        RequestDispatcher rd;
         try{
             String choice = request.getParameter("giftChoice");
             GiftItem item = db.getSingleItem(choice);
-            HttpSession session = request.getSession();
             UserInfo info = (UserInfo)session.getAttribute("userInfo");
             
-            RequestDispatcher rd;
             if(item!=null){
                 if(info.getBonusPoints() - item.getPointRequired() >= 0){
                     boolean status = db.redeemItem(item, info);
@@ -90,22 +90,24 @@ public class GiftServlet extends HttpServlet {
                         rd = getServletContext().getRequestDispatcher("/index.jsp");
                     }else{
                         rd = getServletContext().getRequestDispatcher("/error.jsp");
-                        request.setAttribute("msg", "Database error");
+                        session.setAttribute("errmsg", "Database error");
                     }
                 }
                 else{
                     rd = getServletContext().getRequestDispatcher("/error.jsp");
-                    request.setAttribute("msg", "Insufficiant bonus point");
+                    session.setAttribute("errmsg", "Insufficiant bonus point");
                 }
             }
             else{
                 rd = getServletContext().getRequestDispatcher("/error.jsp");
-                    request.setAttribute("msg", "Item not found");
+                    session.setAttribute("errmsg", "Item not found");
             }
             rd.forward(request, response);
         }
         catch(Exception ex){
-            
+             rd = getServletContext().getRequestDispatcher("/error.jsp");
+             session.setAttribute("errmsg", ex);
+             rd.forward(request, response);
         }
     }
 
