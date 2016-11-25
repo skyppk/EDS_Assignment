@@ -101,13 +101,14 @@ public class ShoppingCartServlet extends HttpServlet {
         String itemName = request.getParameter("itemName");
         double itemPrice = Double.parseDouble(request.getParameter("itemPrice"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String img = request.getParameter("img");
 
         HttpSession session = request.getSession();
         ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
         if (cart == null) {
             cart = new ShoppingCart();
         }
-        cart.getCart().add(new OrderDetails(itemId, itemName, quantity, itemPrice, quantity * itemPrice, "pig.png"));
+        cart.getCart().add(new OrderDetails(itemId, itemName, quantity, itemPrice, quantity * itemPrice, img));
         //response.getWriter().println(test);
         session.setAttribute("cart", cart);
 

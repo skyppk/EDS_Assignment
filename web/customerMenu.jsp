@@ -4,10 +4,12 @@
     Author     : nanasemaru
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
 <jsp:useBean id="userInfo" class="cf.bean.UserInfo" scope="session" />
 <%@ page errorPage="error.jsp"%>
 <%
     String login = request.getParameter("login");
+    DecimalFormat df = new DecimalFormat("#,##0.00");
 %>
 <style>
     .nav a {
@@ -110,7 +112,7 @@
                                                 <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
-                <li><a href="gift.jsp">Bonus Point: <%=userInfo.getBonusPoints()%></a></li>
+                <li><a href="gift.jsp">Bonus Point: <%=df.format(userInfo.getBonusPoints())%></a></li>
                 <li>
                     <form method="post" action="login" class="navbar-form">
                         <input type="hidden" name="action" value="logout">
