@@ -86,6 +86,7 @@ public class GiftDB {
                     + "bonus_id int NOT NULL AUTO_INCREMENT,"
                     + "login_id varchar(25) NOT NULL,"
                     + "gift_id int,"
+                    + "gift_name varchar(30) NOT NULL,"
                     + "gift_descriptions varchar(255) NOT NULL,"
                     + "gift_img varchar(255) NOT NULL,"
                     + "used_point double NOT NULL,"
@@ -157,10 +158,11 @@ public class GiftDB {
             if(item==null || info==null){
                 throw new SQLException();
             }            
-            stmt.addBatch("INSERT INTO BonusHistory (login_id,gift_id,gift_descriptions,gift_img,used_point)"
+            stmt.addBatch("INSERT INTO BonusHistory (login_id,gift_id,gift_name,gift_descriptions,gift_img,used_point)"
                     +" VALUES ("+
                             "'"+info.getLoginId()+"',"+
                             "'"+item.getGiftID()+"',"+
+                            "'"+item.getName()+"',"+
                             "'"+item.getDesc()+"',"+
                             "'"+item.getImgsrc()+"',"+
                             "'"+item.getPointRequired()+"'"+
@@ -187,6 +189,40 @@ public class GiftDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+    public ArrayList<GiftItem> getHistory(UserInfo info){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<GiftItem> items = new ArrayList();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM BonusHistory WHERE login_id = '"+info.getLoginId()+"'";
+            System.out.println(preQueryStatement);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                GiftItem item = new GiftItem(
+                        rs.getInt("bonus_id"),
+                        rs.getString("gift_name"),
+                        rs.getString("gift_descriptions"),
+                        rs.getString("gift_img"),
+                        rs.getDouble("used_point")
+                );
+                
+                items.add(item);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return items;
     }
 
 }
