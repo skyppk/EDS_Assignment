@@ -52,12 +52,15 @@ public class editItem extends HttpServlet{
             String designerName = request.getParameter("designerName");
             String descriptions = request.getParameter("descriptions");
             double price = Double.parseDouble(request.getParameter("price"));
-            if(db.editItemInfo(id, price, descriptions, designerName)){
+            if(db.editItemInfo(id, price, descriptions, designerName));
                 response.sendRedirect("product?action=list");
-            }
+            
         } else if ("cancel".equalsIgnoreCase(action)) {
             response.sendRedirect("product?action=list");
         } else if ("updateStatus".equalsIgnoreCase(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String status = request.getParameter("status");
+            if(db.changeItemStatus(id, status));
             response.sendRedirect("product?action=list");
         } 
         

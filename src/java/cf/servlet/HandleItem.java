@@ -75,7 +75,7 @@ public class HandleItem extends HttpServlet {
             }
         }else if ("list".equalsIgnoreCase(action)) {
            
-                ArrayList<ItemInfo> items = db.selectAvailableItem();
+                ArrayList<ItemInfo> items = db.selectAllItem();
                 request.setAttribute("items", items);
                 RequestDispatcher rd;
                 rd = getServletContext().getRequestDispatcher("/manageItem.jsp");

@@ -19,7 +19,7 @@
     <body>
         <%@include file="menu.jsp" %>
         <div class="container">
-            <h2>Manage Customer</h2>
+            <h2>Manage Item</h2>
             <div class="panel panel-default">
                 <!--<div class="panel-body">-->
                 

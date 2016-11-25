@@ -141,7 +141,7 @@ public class ItemDB {
         return isSuccess;
     }
 
-    public boolean editItemInfo(int id, String status) {
+    public boolean changeItemStatus(int id, String status) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
@@ -151,7 +151,6 @@ public class ItemDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, status);
             pStmnt.setInt(2, id);
-            pStmnt.setInt(4, id);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
