@@ -6,12 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="user" scope="request" class="cf.bean.UserInfo"/>
-<jsp:useBean class="java.util.Vector" id="c" scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Account Info</title>
     </head>
     <body>
     <center>
@@ -30,13 +29,13 @@
 
             Money : <%=user.getMoney()%>
 
-            Credit Amount : <input type="text" name="credit" value="<%=user.getCreditAmount()%>">
-
             Bonus Point : <%=user.getBonusPoints()%>
 
             Deposit Money : <input type="text" name="money" value="<%=user.getMoney()%>">
 
-            <input type="submit" name="action" value="Confirm" onclick="return confirm('Are you sure to continue ?')">   <input type="submit" name="action" value="Cancle" onclick="return confirm('Are you sure to continue ?')">
+            Credit Amount : <input type="text" name="credit" value="<%=user.getCreditAmount()%>">
+
+            <input type="submit" name="action" value="Confirm" onclick="return confirm('Are you sure to continue ?')">   <input type="submit" name="action" value="Cancel" onclick="return confirm('Are you sure to continue ?')">
             </pre>
              
         </form>

@@ -6,6 +6,7 @@
 package cf.servlet;
 
 import cf.bean.ItemInfo;
+import cf.bean.UserInfo;
 import cf.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -72,7 +73,26 @@ public class HandleItem extends HttpServlet {
                 rd = getServletContext().getRequestDispatcher("/showItemDetail.jsp");
                 rd.forward(request, response);
             }
-        } else {
+        }else if ("list".equalsIgnoreCase(action)) {
+           
+                ArrayList<ItemInfo> items = db.selectAvailableItem();
+                request.setAttribute("items", items);
+                RequestDispatcher rd;
+                rd = getServletContext().getRequestDispatcher("/manageItem.jsp");
+                rd.forward(request, response);
+            
+        } else if ("getEditItem".equalsIgnoreCase(action)) {
+// obtain the parameter id;
+                String itemId = request.getParameter("id");
+                ItemInfo item= db.queryItemDetail(id);
+                
+                String targetURL = "editItem.jsp";
+                request.setAttribute("item", item);
+                RequestDispatcher rd;
+                rd = getServletContext().getRequestDispatcher("/" + targetURL);
+                rd.forward(request, response);
+            }
+        else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
         }

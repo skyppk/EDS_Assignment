@@ -112,17 +112,17 @@ public class ItemDB {
         return isSuccess;
     }
 
-    public boolean editItemInfo(int id, double price, String descriptions, String itemStatus) {
+    public boolean editItemInfo(int id, double price, String descriptions, String designerName) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "UPDATE ItemInfo SET price = ? , descriptions = ? , item_status =? WHERE id = ? ";
+            String preQueryStatement = "UPDATE ItemInfo SET price = ? , descriptions = ? , designer_name =? WHERE id = ? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setDouble(1, price);
             pStmnt.setString(2, descriptions);
-            pStmnt.setString(3, itemStatus);
+            pStmnt.setString(3, designerName);
             pStmnt.setInt(4, id);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
@@ -141,6 +141,34 @@ public class ItemDB {
         return isSuccess;
     }
 
+    public boolean editItemInfo(int id, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE ItemInfo SET item_status =? WHERE id = ? ";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, status);
+            pStmnt.setInt(2, id);
+            pStmnt.setInt(4, id);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
     public boolean editItemInfo(ItemInfo itemInfo) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
