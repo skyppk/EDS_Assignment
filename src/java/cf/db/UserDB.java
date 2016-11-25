@@ -347,6 +347,42 @@ public class UserDB {
         return isSuccess;
     }
     
+    public boolean editMoney(String loginId,String order,double money) {
+        Connection cnnct = null;
+        Statement stmt = null;
+        boolean isSuccess = false;
+        double fees = money-500;
+        try {
+            cnnct = getConnection();
+            cnnct.setAutoCommit(false);
+            stmt = cnnct.createStatement();
+//            stmt.addBatch("UPDATE UserInfo SET user_status = '" + userStatus + "' WHERE login_id = '" + loginId + "'");
+            stmt.addBatch("UPDATE AccountInfo SET money = money + " + fees + " WHERE login_id = '" + loginId + "'");
+            stmt.addBatch("UPDATE OrderInfo SET order_status = 'CANCELED' WHERE login_id = '" + loginId + "' AND order_id = '"+order+"';");
+            int counts[] = stmt.executeBatch();
+            cnnct.commit();
+            System.out.println("Committed " + counts.length);
+            stmt.close();
+            cnnct.close();
+            isSuccess = true;
+        } catch (SQLException ex) {
+            if(cnnct != null){
+                try{
+                    cnnct.rollback();
+                }catch(SQLException ex1){
+                    ex1.printStackTrace();
+                }
+            }
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
 //    public boolean editRecord(CustomerBean cb){
 //        Connection cnnct = null;
 //        PreparedStatement pStmnt = null;

@@ -49,16 +49,20 @@ public class OrderHistory extends HttpServlet {
         String id = request.getParameter("id");
         String action = request.getParameter("action");
         if (id != null) {
-            ArrayList<OrderInfo> orders = db.queryOrderHistory(id);
-            request.setAttribute("orders", orders);
+            ArrayList<OrderInfo> orders;
+            
             RequestDispatcher rd;
             if ("now".equalsIgnoreCase(action)) {
+                orders = db.queryExistingOrder(id,"WAITING");
+                request.setAttribute("orders", orders);
                 String message = request.getParameter("message");
                 if (message!=null&&!message.equals("")) {
                     request.setAttribute("message", message);
                 }
                 rd = getServletContext().getRequestDispatcher("/manageExistingOrder.jsp");
             } else {
+                orders = db.queryOrderHistory(id);
+                request.setAttribute("orders", orders);
                 rd = getServletContext().getRequestDispatcher("/orderHistory.jsp");
             }
             rd.forward(request, response);

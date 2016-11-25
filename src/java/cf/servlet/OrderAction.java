@@ -7,6 +7,7 @@ package cf.servlet;
 
 import cf.bean.OrderInfo;
 import cf.db.OrderDB;
+import cf.db.UserDB;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class OrderAction extends HttpServlet {
 
     OrderDB db;
+    UserDB userDb;
 
     @Override
     public void init() throws ServletException {
@@ -35,6 +37,7 @@ public class OrderAction extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
 
         db = new OrderDB(dbUrl, dbUser, dbPassword);
+        userDb = new UserDB(dbUrl, dbUser, dbPassword);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,20 +59,22 @@ public class OrderAction extends HttpServlet {
             if ("cancel".equalsIgnoreCase(action)) {
                 OrderInfo o = db.queryOrderById(id, order);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
                 Date orderDate = format.parse(o.getOrderDate());
+                Date deliveryDate = format2.parse(o.getDeliveryDate());
                 Date date = new Date();
                 String message = null;
                 System.out.println(date.getTime() - orderDate.getTime());
-                if ((date.getTime() - orderDate.getTime()) > 24 * 60 * 60 * 1000) {
-                    if ((orderDate.getTime()) - date.getTime() > 24 * 60 * 60 * 1000) {
-                        if (db.deleteOrderById(id, order)) {
+                if ((date.getTime() - orderDate.getTime()) < 24 * 60 * 60 * 1000) {
+                    if ((deliveryDate.getTime()) - date.getTime() > 24 * 60 * 60 * 1000) {
+                        if (userDb.editMoney(id,order, o.getOrderPrice())) {                           
                             message = "Order Id " + order + " is cancelled";
                         }
                     } else {
-                        message = "Cancel is not available";
+                        message = "1Cancel is not available";
                     }
                 } else {
-                    message = "Cancel is not available";
+                    message = "2Cancel is not available";
                 }
                 response.sendRedirect("orderHistory?action=now&id="+ id +"&message="+ message);
             }
