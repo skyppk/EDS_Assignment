@@ -46,8 +46,32 @@ public class GiftServlet extends HttpServlet {
                  getItemList(response);
                  break;
              case "getHistory":
+                 getHistory( request,response);
                  break;
          }
+    }
+    private void getHistory(HttpServletRequest request,HttpServletResponse response)
+            throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        ArrayList<GiftItem> items = db.getHistory((UserInfo)session.getAttribute("userInfo"));
+         String json = "[";
+                 for(int i=0;i<items.size();i++){
+                     GiftItem item = items.get(i);
+                     json += "{";
+                     json +=    "\"id\":\""+item.getGiftID()+"\",";
+                     json +=    "\"name\":\""+item.getName()+"\",";
+                     json +=    "\"desc\":\""+item.getDesc()+"\",";
+                     json +=    "\"imgsrc\":\""+item.getImgsrc()+"\",";
+                     json +=    "\"ptreq\":\""+item.getPointRequired()+"\"";
+                     json += "}";
+                     if(i<items.size()-1)
+                        json += ",";
+                 }
+                 
+         json += "]";
+         response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.write(json);
     }
     private void getItemList(HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,13 +99,13 @@ public class GiftServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        RequestDispatcher rd;
         try{
             String choice = request.getParameter("giftChoice");
             GiftItem item = db.getSingleItem(choice);
-            HttpSession session = request.getSession();
             UserInfo info = (UserInfo)session.getAttribute("userInfo");
             
-            RequestDispatcher rd;
             if(item!=null){
                 if(info.getBonusPoints() - item.getPointRequired() >= 0){
                     boolean status = db.redeemItem(item, info);
@@ -90,22 +114,24 @@ public class GiftServlet extends HttpServlet {
                         rd = getServletContext().getRequestDispatcher("/index.jsp");
                     }else{
                         rd = getServletContext().getRequestDispatcher("/error.jsp");
-                        request.setAttribute("msg", "Database error");
+                        session.setAttribute("errmsg", "Database error");
                     }
                 }
                 else{
                     rd = getServletContext().getRequestDispatcher("/error.jsp");
-                    request.setAttribute("msg", "Insufficiant bonus point");
+                    session.setAttribute("errmsg", "Insufficiant bonus point");
                 }
             }
             else{
                 rd = getServletContext().getRequestDispatcher("/error.jsp");
-                    request.setAttribute("msg", "Item not found");
+                    session.setAttribute("errmsg", "Item not found");
             }
             rd.forward(request, response);
         }
         catch(Exception ex){
-            
+             rd = getServletContext().getRequestDispatcher("/error.jsp");
+             session.setAttribute("errmsg", ex);
+             rd.forward(request, response);
         }
     }
 

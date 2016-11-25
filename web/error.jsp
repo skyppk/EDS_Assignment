@@ -17,12 +17,13 @@
         <script>
             $(function () {
                 jspErrMsg = "<%=  (exception!=null? exception.getMessage():"") %>";
+                attrMsg = "<%=  (session.getAttribute("errmsg")!=null? session.getAttribute("errmsg"):"") %>";
                 errMsg = decodeURI(location.search.split('msg=')[1]);
                 
                 setTimeout(function () {
                     $('#message').fadeIn(300);
                     $('#message').typed({
-                        strings: [jspErrMsg!="" ? jspErrMsg : errMsg],
+                        strings: [(jspErrMsg !="" ? jspErrMsg : (attrMsg!="" ? attrMsg : errMsg))],
                         typeSpeed: 0
                     });
                     setTimeout(function () {
