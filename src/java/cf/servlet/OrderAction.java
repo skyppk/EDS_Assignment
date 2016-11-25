@@ -71,10 +71,10 @@ public class OrderAction extends HttpServlet {
                             message = "Order Id " + order + " is cancelled";
                         }
                     } else {
-                        message = "1Cancel is not available";
+                        message = "Cancel is not available";
                     }
                 } else {
-                    message = "2Cancel is not available";
+                    message = "Cancel is not available";
                 }
                 response.sendRedirect("orderHistory?action=now&id="+ id +"&message="+ message);
             }

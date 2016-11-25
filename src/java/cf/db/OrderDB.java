@@ -137,7 +137,6 @@ public class OrderDB {
                 order.setOrderDate(rs.getString("order_date"));
                 order.setOrderStatus(rs.getString("order_status"));
                 order.setOrderPrice(rs.getDouble("order_price"));
-                
                 orders.add(order);
             }
             pStmnt.close();
