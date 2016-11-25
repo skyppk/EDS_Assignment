@@ -71,7 +71,8 @@
                        itemId : '<%=item.getItemId()%>',
                        itemName : '<%=item.getItemName()%>',
                        itemPrice : <%=item.getPrice()%>,
-                       quantity : $('#quantity').val()
+                       quantity : $('#quantity').val(),
+                       img: '<%=item.getImg()%>'
                    }); 
                    alert('Item added to cart!');
                 });
