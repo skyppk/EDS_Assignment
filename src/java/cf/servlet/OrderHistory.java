@@ -21,18 +21,19 @@ import javax.servlet.http.HttpServletResponse;
  * @author nanasemaru
  */
 @WebServlet(name = "OrderHistory", urlPatterns = {"/orderHistory"})
-public class OrderHistory extends HttpServlet  {
+public class OrderHistory extends HttpServlet {
+
     OrderDB db;
-    
+
     @Override
     public void init() throws ServletException {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
-        
+
         db = new OrderDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -46,11 +47,20 @@ public class OrderHistory extends HttpServlet  {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        if (id!=null) {
+        String action = request.getParameter("action");
+        if (id != null) {
             ArrayList<OrderInfo> orders = db.queryOrderHistory(id);
             request.setAttribute("orders", orders);
             RequestDispatcher rd;
-            rd = getServletContext().getRequestDispatcher("/orderHistory.jsp");
+            if ("now".equalsIgnoreCase(action)) {
+                String message = request.getParameter("message");
+                if (message!=null&&!message.equals("")) {
+                    request.setAttribute("message", message);
+                }
+                rd = getServletContext().getRequestDispatcher("/manageExistingOrder.jsp");
+            } else {
+                rd = getServletContext().getRequestDispatcher("/orderHistory.jsp");
+            }
             rd.forward(request, response);
         }
     }
