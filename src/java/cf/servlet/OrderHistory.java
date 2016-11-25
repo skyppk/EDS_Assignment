@@ -48,7 +48,7 @@ public class OrderHistory extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         String action = request.getParameter("action");
-        if (id != null) {
+//        if (id != null) {
             ArrayList<OrderInfo> orders;
             
             RequestDispatcher rd;
@@ -60,12 +60,22 @@ public class OrderHistory extends HttpServlet {
                     request.setAttribute("message", message);
                 }
                 rd = getServletContext().getRequestDispatcher("/manageExistingOrder.jsp");
+            } else if("manage".equalsIgnoreCase(action)){
+                orders = db.queryAllOrder();
+                request.setAttribute("orders", orders);
+                rd = getServletContext().getRequestDispatcher("/manageOrder.jsp");
+            }  else if("update".equalsIgnoreCase(action)){
+                String status = request.getParameter("status");
+                db.updateStatus(id, status);
+//                request.setAttribute("orders", orders);
+                rd = getServletContext().getRequestDispatcher("/orderHistory?action=manage");
             } else {
                 orders = db.queryOrderHistory(id);
                 request.setAttribute("orders", orders);
                 rd = getServletContext().getRequestDispatcher("/orderHistory.jsp");
             }
             rd.forward(request, response);
-        }
+//        }
+        
     }
 }

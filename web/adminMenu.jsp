@@ -112,7 +112,7 @@
             <li><a href="product?action=list">Manage Staff</a></li>
             <li><a href="product?action=list">Manage Item</a></li>
             <li><a href="product?action=Accessories">Manage Gift</a></li>
-            <li><a href="">Manage Order</a></li>
+            <li><a href="orderHistory?action=manage">Manage Order</a></li>
         </ul>
     </div>
 </div>

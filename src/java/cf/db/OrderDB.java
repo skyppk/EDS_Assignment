@@ -152,6 +152,46 @@ public class OrderDB {
         return orders;
     }
     
+    public ArrayList<OrderInfo> queryAllOrder() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderInfo order = null;
+        ArrayList<OrderInfo> orders = new ArrayList();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM OrderInfo;";
+            System.out.println(preQueryStatement);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                order = new OrderInfo();
+                order.setId(rs.getInt("id"));
+                order.setLoginId(rs.getString("login_id"));
+                order.setOrderId(rs.getString("order_id"));
+                order.setDeliveryType(rs.getString("delivery_type"));
+                order.setDeliveryDate(rs.getString("delivery_date"));
+                order.setDeliveryTime(rs.getString("delivery_time"));
+                order.setDeliveryAddress(rs.getString("delivery_address"));
+                order.setOrderDate(rs.getString("order_date"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderPrice(rs.getDouble("order_price"));
+                
+                orders.add(order);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orders;
+    }
+    
     public ArrayList<OrderInfo> queryExistingOrder(String userId,String status) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -233,16 +273,20 @@ public class OrderDB {
         return order;
     }
     
-    public boolean deleteOrderById(String id,String orderId) {
+    public boolean updateStatus(String id,String status) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
+        int ids = Integer.parseInt(id);
+        System.out.println(ids);
         try {
             cnnct = getConnection();
-            String preQueryStatement = "DELETE FROM OrderInfo WHERE login_id = ? AND order_id = ?";
+            String preQueryStatement = "UPDATE OrderInfo SET order_status = ? WHERE id = ?;";
+            System.out.println(preQueryStatement);
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, id);
-            pStmnt.setString(2, orderId);
+            pStmnt.setString(1, status);
+            pStmnt.setInt(2, ids);
+            ResultSet rs = null;
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -259,6 +303,33 @@ public class OrderDB {
         }
         return isSuccess;
     }
+    
+//    public boolean deleteOrderById(String id,String orderId) {
+//        Connection cnnct = null;
+//        PreparedStatement pStmnt = null;
+//        boolean isSuccess = false;
+//        try {
+//            cnnct = getConnection();
+//            String preQueryStatement = "DELETE FROM OrderInfo WHERE login_id = ? AND order_id = ?";
+//            pStmnt = cnnct.prepareStatement(preQueryStatement);
+//            pStmnt.setString(1, id);
+//            pStmnt.setString(2, orderId);
+//            int rowCount = pStmnt.executeUpdate();
+//            if (rowCount >= 1) {
+//                isSuccess = true;
+//            }
+//            pStmnt.close();
+//            cnnct.close();
+//        } catch (SQLException ex) {
+//            while (ex != null) {
+//                ex.printStackTrace();
+//                ex = ex.getNextException();
+//            }
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        return isSuccess;
+//    }
     
     public boolean addOrderInfo(String orderId, String loginId, String deliveryType, String deliveryDate, String deliveryTime, String deliveryAddress, double orderPrice, ArrayList<OrderDetails> orderDetails,double bonusPoint){
         Connection cnnct = null;
