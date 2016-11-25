@@ -102,6 +102,7 @@
                         <li><a href="profile.jsp">Profile</a></li>
                         <li><a href="orderHistory?action=now&id=<%=userInfo.getLoginId()%>">Existing Order</a></li>
                         <li><a href="orderHistory?id=<%=userInfo.getLoginId()%>">Order History</a></li>
+                        <li><a href="giftHistory.jsp">Gift Redemption History</a></li>
 
                         <!--                        <li role="separator" class="divider"></li>
                                                 <li><a href="#">Separated link</a></li>

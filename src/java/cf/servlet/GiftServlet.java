@@ -46,8 +46,32 @@ public class GiftServlet extends HttpServlet {
                  getItemList(response);
                  break;
              case "getHistory":
+                 getHistory( request,response);
                  break;
          }
+    }
+    private void getHistory(HttpServletRequest request,HttpServletResponse response)
+            throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        ArrayList<GiftItem> items = db.getHistory((UserInfo)session.getAttribute("userInfo"));
+         String json = "[";
+                 for(int i=0;i<items.size();i++){
+                     GiftItem item = items.get(i);
+                     json += "{";
+                     json +=    "\"id\":\""+item.getGiftID()+"\",";
+                     json +=    "\"name\":\""+item.getName()+"\",";
+                     json +=    "\"desc\":\""+item.getDesc()+"\",";
+                     json +=    "\"imgsrc\":\""+item.getImgsrc()+"\",";
+                     json +=    "\"ptreq\":\""+item.getPointRequired()+"\"";
+                     json += "}";
+                     if(i<items.size()-1)
+                        json += ",";
+                 }
+                 
+         json += "]";
+         response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.write(json);
     }
     private void getItemList(HttpServletResponse response)
             throws ServletException, IOException {
