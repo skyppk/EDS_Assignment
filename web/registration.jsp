@@ -60,5 +60,10 @@
                 </div>
             </div>
         </div>
+<!--        <script>
+//            if ( $('[type="date"]').prop('type') != 'date' ) {
+    $('[type="date"]').datepicker();
+//}
+        </script>-->
     </body>
 </html>

@@ -92,8 +92,8 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</span><small><button type=\"button\" class=\"btn btn-default\" onclick=\"location.href='ShoppingCartServlet?action=placeOrder'\">Order</button></small></h4>");
                     out.println("</div></div></div>");
                 } else if ("placeOrder".equalsIgnoreCase(tagType)) {
-                    out.println("<div class=\"panel-body\"\">");
-                    out.println("<div class=\"row\"><h4><small>Total Price: </small><span id=\"totalPriceTag\">" + sTotal+"</span>");
+                    out.println("");
+                    out.println("<ul class=\"list-group\"><li class=\"list-group-item text-right\"><small>Total Price: </small><span id=\"totalPriceTag\" style=\"font-size: 18px;\"><b>" + sTotal+"</b></span></li></ul><div class=\"panel-body\"\">");
                     out.println("<form action=\"order\" method=\"post\">");
                     
                     out.println("<div class=\"form-group\">");
