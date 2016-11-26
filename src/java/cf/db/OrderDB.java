@@ -273,6 +273,58 @@ public class OrderDB {
         return order;
     }
     
+    public OrderInfo queryOrderDetailById(String id,String orderId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderInfo order = new OrderInfo();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT OrderInfo.id as oId, OrderDetails.order_id, login_id, delivery_date, delivery_time, delivery_type, delivery_address, order_price,order_date,order_status, item_id, item_name,quantity,buy_price,details_price FROM OrderInfo INNER JOIN OrderDetails ON OrderInfo.order_id = OrderDetails.order_id WHERE login_id = ? AND OrderDetails.order_id = ?;";
+            System.out.println(preQueryStatement);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.setString(2, orderId);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            ArrayList<OrderDetails> details = new ArrayList();
+            OrderDetails detail;
+            
+            while (rs.next()) {
+//                order = new OrderInfo();
+                order.setId(rs.getInt("oid"));
+                order.setLoginId(rs.getString("login_id"));
+                order.setOrderId(rs.getString("order_id"));
+                order.setDeliveryType(rs.getString("delivery_type"));
+                order.setDeliveryDate(rs.getString("delivery_date"));
+                order.setDeliveryTime(rs.getString("delivery_time"));
+                order.setDeliveryAddress(rs.getString("delivery_address"));
+                order.setOrderDate(rs.getString("order_date"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderPrice(rs.getDouble("order_price"));    
+
+                detail = new OrderDetails();
+                detail.setItemId(rs.getString("item_id"));
+                detail.setItemName(rs.getString("item_name"));
+//                detail.setImg(rs.getString("item_id"));
+                detail.setQuantity(rs.getInt("quantity"));
+                detail.setBuyPrice(rs.getDouble("buy_price"));
+                detail.setDetailsPrice(rs.getDouble("details_price"));
+                details.add(detail);
+            }
+            order.setOrderDetails(details);
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return order;
+    }
+    
     public boolean updateStatus(String id,String status) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;

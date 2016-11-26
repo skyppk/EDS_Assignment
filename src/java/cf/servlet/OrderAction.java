@@ -52,10 +52,12 @@ public class OrderAction extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher rd;
         try {
             String id = request.getParameter("id");
             String order = request.getParameter("order");
             String action = request.getParameter("action");
+            
             if ("cancel".equalsIgnoreCase(action)) {
                 OrderInfo o = db.queryOrderById(id, order);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -67,7 +69,7 @@ public class OrderAction extends HttpServlet {
                 System.out.println(date.getTime() - orderDate.getTime());
                 if ((date.getTime() - orderDate.getTime()) < 24 * 60 * 60 * 1000) {
                     if ((deliveryDate.getTime()) - date.getTime() > 24 * 60 * 60 * 1000) {
-                        if (userDb.editMoney(id,order, o.getOrderPrice())) {                           
+                        if (userDb.editMoney(id, order, o.getOrderPrice())) {
                             message = "Order Id " + order + " is cancelled";
                         }
                     } else {
@@ -76,11 +78,16 @@ public class OrderAction extends HttpServlet {
                 } else {
                     message = "Cancel is not available";
                 }
-                response.sendRedirect("orderHistory?action=now&id="+ id +"&message="+ message);
+                response.sendRedirect("orderHistory?action=now&id=" + id + "&message=" + message);
+            } else if ("detail".equalsIgnoreCase(action)) {
+                OrderInfo o = db.queryOrderDetailById(id, order);
+                request.setAttribute("order", o);
+                rd = getServletContext().getRequestDispatcher("/orderDetail.jsp");
+                rd.forward(request, response);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            
+            rd = getServletContext().getRequestDispatcher("/error.jsp");
+                rd.forward(request, response);
         }
 //            request.setAttribute("order", order);
 //            RequestDispatcher rd;

@@ -11,7 +11,6 @@
 <!DOCTYPE html>
 <%
     ArrayList<OrderInfo> orders = (ArrayList<OrderInfo>) request.getAttribute("orders");
-    System.out.println("damnnn"+orders.size());
     
 %>
 <html>
@@ -32,6 +31,8 @@
                             <th>Price</th>
                             <th>Delivery Date</th>
                             <th>Address</th>
+                            <th>Status</th>
+                            <th>Detail</th>
                         </tr>
                         <% for (OrderInfo order:orders) {%>
                         <tr>
@@ -40,6 +41,8 @@
                             <td>$ <%=order.getOrderPrice()%></td>
                             <td><%=order.getDeliveryDate()%> <%=order.getDeliveryTime()%></td>
                             <td><%=order.getDeliveryAddress()%></td>
+                            <td><%=order.getOrderStatus()%></td>
+                            <td><button class="btn btn-default" id="Cancel" onclick="location.href = 'orderAction?action=detail&id=<%=order.getLoginId()%>&order=<%=order.getOrderId()%>'">Details</button></td>
                         </tr>
                                     <% } %>
                     </table>
