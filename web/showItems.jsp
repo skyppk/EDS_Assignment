@@ -50,7 +50,7 @@
                 </ul>
             </div>
             <p></p>
-            <div class="row">
+            <div class="row" style="display:flex; flex-wrap: wrap;">
                 <items:showItems items="<%=items%>"/>
             </div>
         </div>

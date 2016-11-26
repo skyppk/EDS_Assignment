@@ -42,7 +42,7 @@ public class cartDisplayTag extends SimpleTagSupport {
             JspWriter out = pageContext.getOut();
             DecimalFormat df = new DecimalFormat("$ #,##0.00");
 
-            if (items != null) {
+            if (items != null&&items.size()!=0) {
                 out.println("<div class=\"table-responsive\"><table class=\"table\">");
                 out.println("<tr>");
                 out.println("<th></th>");
@@ -123,7 +123,7 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</div>");
                 }
             } else {
-                out.println("<p class=\"text-center\">No item</p>");
+                out.println("<div class=\"panel-body\"><p class=\"text-center\">No item</p></div>");
             }
         } catch (Exception e) {
             e.printStackTrace();

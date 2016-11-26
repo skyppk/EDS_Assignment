@@ -3,6 +3,7 @@
     Created on : 2016/11/26, 下午 05:01:39
     Author     : nanasemaru
 --%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="cf.bean.OrderDetails"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="cf.bean.OrderInfo"%>
@@ -29,19 +30,25 @@
                             <th>Unit Price</th>
                             <th>Price</th>
                         </tr>
-        <%
-            ArrayList<OrderDetails> details = order.getOrderDetails();
-            for (OrderDetails detail:details) {
-        %>
-            
-            <tr>
-                <td><%=detail.getItemId()%></td>
-                <td><%=detail.getItemName()%></td>
-                <td><%=detail.getQuantity()%></td>
-                <td><%=detail.getBuyPrice()%></td>
-                <td><%=detail.getDetailsPrice()%></td>
-            </tr>
-            <% } %>
+                        <%
+                            ArrayList<OrderDetails> details = order.getOrderDetails();
+                            DecimalFormat df = new DecimalFormat("$ #,##0.00");
+                            for (OrderDetails detail : details) {
+                        %>
+
+                        <tr>
+                            <td><%=detail.getItemId()%></td>
+                            <td><%=detail.getItemName()%></td>
+                            <td><%=detail.getQuantity()%></td>
+                            <td><%=detail.getBuyPrice()%></td>
+                            <td><%=detail.getDetailsPrice()%></td>
+                        </tr>
+                        <% }%>
+                    </table>
+                </div>
+            <div class="panel-body">
+                <strong class="pull-right">Total: <%=df.format(order.getOrderPrice())%></strong>
+            </div>
         </div>
     </body>
 </html>
