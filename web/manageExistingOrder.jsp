@@ -7,7 +7,7 @@
 <%@page import="cf.bean.OrderInfo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@ page errorPage="error.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>

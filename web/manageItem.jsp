@@ -10,6 +10,11 @@
 <%@ page errorPage="error.jsp"%>
 <%@taglib uri="/WEB-INF/tlds/listitem" prefix="listitem" %>
 <jsp:useBean id="items" class="java.util.ArrayList<ItemInfo>" scope="request"/>
+
+<%
+    if(staffInfo==null)
+    throw new Exception();
+%>
 <!DOCTYPE html>
 <html>
     <head>
