@@ -30,5 +30,21 @@ public class ShoppingCart {
         this.cart = cart;
     }
     
-    
+    public void addCart(OrderDetails orderDetails){
+        boolean check = true;
+        for(OrderDetails oDs : cart){
+            System.out.println("check od" + oDs.getItemId() + "check :" + orderDetails.getItemId());
+            if(oDs.getItemId().equals(orderDetails.getItemId())){
+                oDs.setQuantity(oDs.getQuantity() + orderDetails.getQuantity());
+                oDs.setDetailsPrice(oDs.getDetailsPrice()+ orderDetails.getDetailsPrice());
+                check = false;
+                break;
+            }
+        }
+        System.out.println("check ??????" + check);
+        if(check){
+            System.out.println("check ?" + check);
+            cart.add(orderDetails);
+        }
+    }
 }

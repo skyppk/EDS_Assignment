@@ -46,15 +46,15 @@ public class orderListTag extends SimpleTagSupport {
             out.println("<th>Order Price</th>");
             out.println("<th>Order Date</th>");
             out.println("<th>Order Status</th>");
-            out.println("<th colspan=\"2\">Action</th>");
+            out.println("<th colspan=\"2\">Update Status</th>");
             out.println("</tr>");
             if(orders == null){
                 System.out.println("fk you");
             }
-            if (orders != null) {
+            if (orders != null && orders.size()>0) {
                 for (OrderInfo order : orders) {
                     //out.println(item.getItemName() + "<br>");   
-                    out.println("<tr><td style=\"vertical-align:middle;\">");
+                    out.println("<form method=\"POST\" action=\"orderHistory\"><tr><td style=\"vertical-align:middle;\">");
                     out.println(order.getOrderId());
                     out.println("</td><td style=\"vertical-align:middle; white-space: nowrap; text-overflow: ellipsis; overflow:hidden;\">");
                     out.println(order.getLoginId());
@@ -74,16 +74,20 @@ public class orderListTag extends SimpleTagSupport {
                     out.println(order.getOrderStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     
-                    if(order.getOrderStatus().equalsIgnoreCase("Waiting")){
-                        out.println("<a href=\"orderHistory?action=update&id=" + order.getId() + "&status=Arrived\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
+                    if(order.getOrderStatus().equalsIgnoreCase("Waiting") && order.getDeliveryType().equalsIgnoreCase("DELIVERY")){
+                        out.println("<a href=\"orderHistory?action=update&id=" + order.getId() + "&status=ARRIVED\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Arrived</button>");
                         out.println("</a>");
-                   
+                    
+                    }if(order.getOrderStatus().equalsIgnoreCase("Arrived") && order.getDeliveryType().equalsIgnoreCase("DELIVERY")){
+                        out.println("<a href=\"orderHistory?action=update&id=" + order.getId() + "&status=FINISH\">");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Finish</button>");
+                        out.println("</a>");
                     }
          
                     
                     
-                    out.println("</td></tr>");
+                    out.println("</td></tr></form>");
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
 //                out.println("<div class=\"caption\">");
@@ -97,7 +101,7 @@ public class orderListTag extends SimpleTagSupport {
                 out.println("</table></div>");
                 
             } else {
-                out.println("<p>No User !</p>");
+                out.println("</table></div><div class=\"panel-body\"><p class=\"text-center\">No Order</p></div>");
             }
         } catch (IOException ioe) {
             System.out.println("Error generating prime: " + ioe);

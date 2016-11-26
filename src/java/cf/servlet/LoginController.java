@@ -106,7 +106,6 @@ public class LoginController extends HttpServlet {
             session.removeAttribute("userInfo");
             session.removeAttribute("accountType");
             session.removeAttribute("staffInfo");
-            session.invalidate();
         }
         doLogin(req, resp);
     }

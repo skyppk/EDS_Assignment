@@ -65,7 +65,23 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(df.format(item.getBuyPrice()));
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    out.println(item.getQuantity());
+                    if("cart".equalsIgnoreCase(tagType)){
+                        out.println("<div class=\"input-group col-xs-4\">\n" +
+"                        <div class=\"input-group-btn\">\n" +
+"                            <button type=\"button\" class=\"btn btn-default\" id=\"decrease\">\n" +
+"                                <span>-</span>\n" +
+"                            </button>\n" +
+"                        </div>\n" +
+"                        <input type=\"number\" class=\"form-control\" id=\"quantity\" name=\"quantity\" value=\"" +item.getQuantity() + "\" min=\"1\">\n" +
+"                        <span class=\"input-group-btn\">\n" +
+"                            <button class=\"btn btn-default\" type=\"button\" id=\"increase\">+</button>\n" +
+"                        </span>\n" +
+"                    </div>");
+                    }else{
+                        out.println(item.getQuantity());
+                    }
+                    
+                    
                     out.println("</td><td id='dtprice' style=\"vertical-align:middle;\">");
                     out.println(df.format(item.getDetailsPrice()));
                     if ("cart".equalsIgnoreCase(tagType)) {

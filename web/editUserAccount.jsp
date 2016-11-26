@@ -7,6 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="user" scope="request" class="cf.bean.UserInfo"/>
 <%@ page errorPage="error.jsp"%>
+<jsp:useBean id="staffInfo" class="cf.bean.StaffInfo" scope="session" />
+<%
+    System.out.println("test staff Info : " + staffInfo);
+    if (staffInfo.getLoginId() == null) {
+        response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +21,11 @@
         <title>Account Info</title>
     </head>
     <body>
+        <script>
+            if (staffInfo == null) {
+                window.location = "error.jsp?msg=You have not permission to view this page !";
+            }
+        </script>
     <center>
         <form method="POST" action="editCustomer">
             <pre>

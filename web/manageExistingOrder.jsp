@@ -21,6 +21,11 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
+        <%
+            System.out.println("test staff Info : "+staffInfo);
+            if(staffInfo.getLoginId() == null )
+            response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+        %>
         <div class="container">
             <h2>Existing Order</h2>
             <div class="panel panel-default">

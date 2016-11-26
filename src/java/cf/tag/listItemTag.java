@@ -44,12 +44,13 @@ public class listItemTag extends SimpleTagSupport {
             out.println("<th>Desciptions</th>");
             out.println("<th>Image</th>");
             out.println("<th>Item Status</th>");
-            out.println("<th colspan=\"2\">Action</th>");
+            out.println("<th>Edit Item</th>");
+            out.println("<th>Change</th>");
             out.println("</tr>");
             if(items == null){
                 System.out.println("fk you");
             }
-            if (items != null) {
+            if (items != null && items.size()>0) {
                 for (ItemInfo item : items) {
                     //out.println(item.getItemName() + "<br>");   
                     out.println("<tr><td style=\"vertical-align:middle;\">");
@@ -69,17 +70,19 @@ public class listItemTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(item.getItemStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
+                    
                     if(item.getItemStatus().equalsIgnoreCase("AVAILABLE")){
                         out.println("<a href=\"product?action=getEditItem&id=" + item.getItemId()+ "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Edit</button>");
                         out.println("</a>");
                         out.println("</td><td style=\"vertical-align:middle;\">");
                         out.println("<a href=\"editItem?action=updateStatus&id=" + item.getId() + "&status=UNAVAILABLE\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Change Status</button>");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">UNAVAILABLE</button>");
                         out.println("</a>");
                     }else if(item.getItemStatus().equalsIgnoreCase("UNAVAILABLE")){
+                        out.println("</td><td style=\"vertical-align:middle;\">");
                         out.println("<a href=\"editItem?action=updateStatus&id=" + item.getId() + "&status=AVAILABLE\">");
-                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Change Status</button>");
+                        out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">AVAILABLE</button>");
                         out.println("</a>");
                     }
          
@@ -99,7 +102,7 @@ public class listItemTag extends SimpleTagSupport {
                 out.println("</table></div>");
                 
             } else {
-                out.println("<p>No User !</p>");
+                out.println("</table></div><div class=\"panel-body\"><p class=\"text-center\">No item</p></div>");
             }
         } catch (IOException ioe) {
             System.out.println("Error generating prime: " + ioe);

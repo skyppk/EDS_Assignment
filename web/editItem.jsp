@@ -7,6 +7,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="item" scope="request" class="cf.bean.ItemInfo"/>
 <%@ page errorPage="error.jsp"%>
+<jsp:useBean id="staffInfo" class="cf.bean.StaffInfo" scope="session" />
+<%
+    System.out.println("test staff Info : " + staffInfo);
+    if (staffInfo.getLoginId() == null) {
+        response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +21,7 @@
         <title>Item Info</title>
     </head>
     <body>
-        <center>
+    <center>
         <form method="POST" action="editItem">
             <pre>
             <input type="hidden" name="id" value="<%=item.getId()%>">
@@ -44,12 +51,12 @@
 
             <input type="submit" name="action" value="Confirm" onclick="return confirm('Are you sure to continue ?')">   <input type="submit" name="action" value="Cancel" onclick="return confirm('Are you sure to continue ?')">
             </pre>
-             
+
         </form>
-        
-        
-        
-        
+
+
+
+
     </center>
-    </body>
+</body>
 </html>

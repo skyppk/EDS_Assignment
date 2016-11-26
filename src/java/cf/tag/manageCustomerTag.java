@@ -55,7 +55,7 @@ public class manageCustomerTag extends SimpleTagSupport {
             if(customers == null){
                 System.out.println("fk you");
             }
-            if (customers != null) {
+            if (customers != null && customers.size()>0) {
                 for (UserInfo user : customers) {
                     //out.println(item.getItemName() + "<br>");   
                     out.println("<tr><td style=\"vertical-align:middle;\">");
@@ -125,7 +125,7 @@ public class manageCustomerTag extends SimpleTagSupport {
                 out.println("</table></div>");
                 
             } else {
-                out.println("<p>No User !</p>");
+                out.println("</table></div><div class=\"panel-body\"><p class=\"text-center\">No New User</p></div>");
             }
         } catch (IOException ioe) {
             System.out.println("Error generating prime: " + ioe);

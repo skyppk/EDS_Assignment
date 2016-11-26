@@ -49,6 +49,8 @@ public class itemsTag extends SimpleTagSupport {
                     out.println("</div>");
                     out.println("</div>");
                 }
+            }else {
+                out.println("<div class=\"panel-body\"><p class=\"text-center\">No item</p></div>");
             }
         } catch (IOException ioe) {
             System.out.println("Error generating prime: " + ioe);

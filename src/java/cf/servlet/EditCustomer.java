@@ -136,7 +136,7 @@ public class EditCustomer extends HttpServlet {
                 response.sendRedirect("handleCustomer?action=list");
             }  
             
-        } else if ("cancle".equalsIgnoreCase(action)) {
+        } else if ("cancel".equalsIgnoreCase(action)) {
             
                 response.sendRedirect("handleCustomer?action=list");
             

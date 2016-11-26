@@ -16,7 +16,16 @@
         <%@include file="menu.jsp" %>
         <script>
             $(function () {
-
+                $('#increase').click(function () {
+                    var num = parseInt($('#quantity').val());
+                    $('#quantity').val(num + 1);
+                });
+                $('#decrease').click(function () {
+                    var num = parseInt($('#quantity').val());
+                    if (num > 1) {
+                        $('#quantity').val(num - 1);
+                    }
+                });
             });
             function dropItem(id, element) {
 
