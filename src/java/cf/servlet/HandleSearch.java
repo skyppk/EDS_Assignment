@@ -78,7 +78,7 @@ public class HandleSearch extends HttpServlet {
                 if ("all".equalsIgnoreCase(type)) {
                     items = db.searchAllItemBySortingDesigner(keyword, action);
                 } else {
-                    items = db.searchItemBySortingDesigner(type, keyword, action);
+                    items = db.searchItemBySortingDesigner(keyword, action);
                 }
             } else {
                 if ("all".equalsIgnoreCase(type)) {

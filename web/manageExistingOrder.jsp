@@ -43,7 +43,11 @@
                             <td><%=order.getDeliveryDate()%> <%=order.getDeliveryTime()%></td>
                             <td><%=order.getDeliveryAddress()%></td>
                             <td><button class="btn btn-default" id="changeDate">Change Date</button></td>
+                            <% if (order.getOrderPrice() > 10000) {%>
                             <td><button class="btn btn-default" id="Cancel" onclick="location.href = 'orderAction?action=cancel&id=<%=order.getLoginId()%>&order=<%=order.getOrderId()%>'">Cancel</button></td>
+                            <% } else {%>
+                            <td>Not Allow</td>
+                            <% } %>
                         </tr>
                         <% } %>
                     </table>

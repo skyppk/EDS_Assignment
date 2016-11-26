@@ -42,8 +42,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="searchItem?action=asc&type=<%=type%>&keyword=<%=keyword%>">Increasing Name</a></li>
-                    <li><a href="searchItem?action=desc&type=<%=type%>&keyword=<%=keyword%>">Decreasing Name</a></li>
+                    <li><a href="searchItem?action=asc&type=<%=type%>&keyword=<%=keyword%>">Increasing Price</a></li>
+                    <li><a href="searchItem?action=desc&type=<%=type%>&keyword=<%=keyword%>">Decreasing Price</a></li>
                     <!--                    <li><a href="#">Something else here</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a href="#">Separated link</a></li>-->
