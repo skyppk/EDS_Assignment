@@ -28,6 +28,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <tr>
+                            <th></th>
                             <th>Item ID</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
@@ -41,11 +42,12 @@
                         %>
 
                         <tr>
-                            <td><%=detail.getItemId()%></td>
-                            <td><%=detail.getItemName()%></td>
-                            <td><%=detail.getQuantity()%></td>
-                            <td><%=detail.getBuyPrice()%></td>
-                            <td><%=detail.getDetailsPrice()%></td>
+                            <td><img src="img/<%=detail.getImg()%>" alt="No Image" style="height: 50px;"></td>
+                            <td style="vertical-align:middle;"><%=detail.getItemId()%></td>
+                            <td style="vertical-align:middle;"><%=detail.getItemName()%></td>
+                            <td style="vertical-align:middle;"><%=detail.getQuantity()%></td>
+                            <td style="vertical-align:middle;"><%=detail.getBuyPrice()%></td>
+                            <td style="vertical-align:middle;"><%=detail.getDetailsPrice()%></td>
                         </tr>
                         <% }%>
                     </table>

@@ -280,7 +280,7 @@ public class OrderDB {
         OrderInfo order = new OrderInfo();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT OrderInfo.id as oId, OrderDetails.order_id, login_id, delivery_date, delivery_time, delivery_type, delivery_address, order_price,order_date,order_status, item_id, item_name,quantity,buy_price,details_price FROM OrderInfo INNER JOIN OrderDetails ON OrderInfo.order_id = OrderDetails.order_id WHERE login_id = ? AND OrderDetails.order_id = ?;";
+            String preQueryStatement = "SELECT OrderInfo.id as oId, OrderDetails.order_id, login_id, delivery_date, delivery_time, delivery_type, delivery_address, order_price,order_date,order_status, item_id, item_name,quantity,buy_price,details_price,item_img FROM OrderInfo INNER JOIN OrderDetails ON OrderInfo.order_id = OrderDetails.order_id WHERE login_id = ? AND OrderDetails.order_id = ?;";
             System.out.println(preQueryStatement);
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
