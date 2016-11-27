@@ -5,17 +5,16 @@
  */
 package cf.servlet;
 
-import cf.bean.ItemInfo;
+import cf.bean.StaffInfo;
 import cf.db.ItemDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,7 +46,11 @@ public class editItem extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        HttpSession session = request.getSession(true);
+        StaffInfo staffInfo = (StaffInfo)session.getAttribute("staffInfo");
+        if (staffInfo.getLoginId() == null) {
+        response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+        }
         if ("confirm".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             String designerName = request.getParameter("designerName");

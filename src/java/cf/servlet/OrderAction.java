@@ -6,6 +6,7 @@
 package cf.servlet;
 
 import cf.bean.OrderInfo;
+import cf.bean.UserInfo;
 import cf.db.OrderDB;
 import cf.db.UserDB;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -71,6 +73,12 @@ public class OrderAction extends HttpServlet {
                     if ((deliveryDate.getTime()) - date.getTime() > 24 * 60 * 60 * 1000) {
                         if (userDb.editMoney(id, order, o.getOrderPrice())) {
                             message = "Order Id " + order + " is cancelled";
+                            HttpSession session = request.getSession(false);
+                            UserInfo olduser = (UserInfo)session.getAttribute("userInfo");
+                            UserInfo user = new UserInfo();
+                            user = userDb.getUserInfo(olduser.getLoginId(), olduser.getPassword());
+                            session.setAttribute("accountType", user.getAccountType());
+                            session.setAttribute("userInfo", user);
                         }
                     } else {
                         message = "Cancel is not available";

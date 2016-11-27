@@ -6,15 +6,14 @@
 package cf.servlet;
 
 import cf.bean.OrderDetails;
-import cf.bean.OrderInfo;
 import cf.bean.ShoppingCart;
 import cf.bean.UserInfo;
 import cf.db.OrderDB;
+import cf.db.UserDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.UUID;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +28,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "OrderServlet", urlPatterns = {"/order"})
 public class OrderServlet extends HttpServlet {
 private OrderDB db;
+private UserDB userDb;
 
     @Override
     public void init() throws ServletException {
@@ -37,6 +37,7 @@ private OrderDB db;
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         
         db = new OrderDB(dbUrl, dbUser, dbPassword);
+        userDb = new UserDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -76,8 +77,14 @@ private OrderDB db;
                         order,
                         getBonus(price)
                 );
-                if(status)
+                if(status){
+                            UserInfo user = new UserInfo();
+                            user = userDb.getUserInfo(info.getLoginId(), info.getPassword());
+                            session.setAttribute("accountType", user.getAccountType());
+                            session.setAttribute("userInfo", user);
                     makeResponse(response,true,null);
+                }
+                    
                 else
                     makeResponse(response,false,"\"msg\": \"Database error\"");
                 /**
@@ -90,6 +97,7 @@ private OrderDB db;
           
     }
     private double getBonus(double price){
+        System.out.println("bonus points?" + price);
         return (price > 2000 ? price * (5/100) : 0);
     }
      private void makeResponse(HttpServletResponse response, boolean status, String json)

@@ -428,6 +428,12 @@ public class OrderDB {
         String athousandyears = "2316-01-01";
         String deliveryDay = deliveryDate != null ? deliveryDate : athousandyears;
         boolean isSuccess = false;
+        double bonus;
+        if(orderPrice > 2000){
+             bonus = orderPrice * 0.05;
+        }else{
+            bonus = 0;
+        }
         try{
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
@@ -441,8 +447,8 @@ public class OrderDB {
                 stmt.addBatch("INSERT INTO OrderDetails VALUES (null,'" + orderId + "','" + od.getItemId() + "','" + od.getItemName() + "','" + od.getQuantity() + "','" + od.getBuyPrice() + "','" + od.getDetailsPrice() + "','" + od.getImg() + "')");
             }
             
-            stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonusPoint + " , money = money - "+ orderPrice + "WHERE login_id = '" + loginId + "'");
-            
+            stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonus + " , money = money - "+ orderPrice + "WHERE login_id = '" + loginId + "'");
+            System.out.println("bonusPoint check : " + bonus);
             int counts[] = stmt.executeBatch();
             System.out.println("Order Details :" + counts.length);
 //            String preQueryStatement = "INSERT INTO OrderInfo VALUES (null,?,?,?,?,?,?,?,DEFAULT,DEFAULT)";

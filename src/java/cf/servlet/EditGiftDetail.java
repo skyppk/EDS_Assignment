@@ -5,6 +5,7 @@
  */
 package cf.servlet;
 
+import cf.bean.StaffInfo;
 import cf.db.GiftDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +35,11 @@ private GiftDB db;
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
+        HttpSession session = request.getSession(true);
+            StaffInfo staffInfo = (StaffInfo) session.getAttribute("staffInfo");
+            if (staffInfo.getLoginId() == null) {
+                response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+            }
         if ("cancel".equalsIgnoreCase(action)) {
             
                 response.sendRedirect("redeem?action=manage");

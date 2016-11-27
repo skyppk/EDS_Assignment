@@ -352,12 +352,13 @@ public class UserDB {
         Statement stmt = null;
         boolean isSuccess = false;
         double fees = money-500;
+        double bonusPoint = money * 0.05;
         try {
             cnnct = getConnection();
             cnnct.setAutoCommit(false);
             stmt = cnnct.createStatement();
 //            stmt.addBatch("UPDATE UserInfo SET user_status = '" + userStatus + "' WHERE login_id = '" + loginId + "'");
-            stmt.addBatch("UPDATE AccountInfo SET money = money + " + fees + " WHERE login_id = '" + loginId + "'");
+            stmt.addBatch("UPDATE AccountInfo SET money = money + " + fees + ", bonus_point = bonus_point - " + bonusPoint + " WHERE login_id = '" + loginId + "'");
             stmt.addBatch("UPDATE OrderInfo SET order_status = 'CANCELED' WHERE login_id = '" + loginId + "' AND order_id = '"+order+"';");
             int counts[] = stmt.executeBatch();
             cnnct.commit();
