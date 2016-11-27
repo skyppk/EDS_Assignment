@@ -425,7 +425,8 @@ public class OrderDB {
         Date today = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String now = formatter.format(today);
-        String deliveryDay = deliveryDate != null ? deliveryDate : now;
+        String athousandyears = "2316-01-01";
+        String deliveryDay = deliveryDate != null ? deliveryDate : athousandyears;
         boolean isSuccess = false;
         try{
             cnnct = getConnection();
