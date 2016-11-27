@@ -114,7 +114,26 @@ public class EditCustomer extends HttpServlet {
                 loginId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
                 password = UUID.randomUUID().toString().replaceAll("-", "").substring(0,9);
             }
-            response.sendRedirect("handleCustomer?action=list");
+            PrintWriter out = response.getWriter();
+//            out.println("<scription type=\"text/javascript\">");
+//            out.println("<alert('Login ID : " + loginId + "\nPassword : " + password + "');");
+//            out.println("loaction='handleCustomer?action=listNew';");
+//            out.println("</script>");
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>New User</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<center><br><br><br><br>");
+            out.println("Login ID : " + loginId + "<br><br>Password : " + password );
+            out.println("<br><br><a href=\"handleCustomer?action=listNew\">Continue</a>");
+            out.println("</center>");
+            out.println("</body>");
+            out.println("</html>");
+            
+            
+//            response.sendRedirect("handleCustomer?action=listNew");
             
         } 
           else if ("decline".equalsIgnoreCase(action)) {
