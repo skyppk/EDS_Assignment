@@ -97,6 +97,7 @@ public class OrderDB {
                     + "quantity int NOT NULL,"
                     + "buy_price double NOT NULL,"
                     + "details_price double NOT NULL,"
+                    + "item_img varchar(255) NOT NULL,"
                     + "PRIMARY KEY (id)"
                     + ");";
             stmnt.execute(sql);
@@ -301,7 +302,7 @@ public class OrderDB {
                 order.setOrderDate(rs.getString("order_date"));
                 order.setOrderStatus(rs.getString("order_status"));
                 order.setOrderPrice(rs.getDouble("order_price"));    
-
+                
                 detail = new OrderDetails();
                 detail.setItemId(rs.getString("item_id"));
                 detail.setItemName(rs.getString("item_name"));
@@ -309,6 +310,7 @@ public class OrderDB {
                 detail.setQuantity(rs.getInt("quantity"));
                 detail.setBuyPrice(rs.getDouble("buy_price"));
                 detail.setDetailsPrice(rs.getDouble("details_price"));
+                detail.setImg(rs.getString("item_img"));
                 details.add(detail);
             }
             order.setOrderDetails(details);
@@ -402,7 +404,7 @@ public class OrderDB {
             }
             for(int i = 0; i < orderDetails.size();i++){
                 OrderDetails od = orderDetails.get(i);
-                stmt.addBatch("INSERT INTO OrderDetails VALUES (null,'" + orderId + "','" + od.getItemId() + "','" + od.getItemName() + "','" + od.getQuantity() + "','" + od.getBuyPrice() + "','" + od.getDetailsPrice() + "')");
+                stmt.addBatch("INSERT INTO OrderDetails VALUES (null,'" + orderId + "','" + od.getItemId() + "','" + od.getItemName() + "','" + od.getQuantity() + "','" + od.getBuyPrice() + "','" + od.getDetailsPrice() + "','" + od.getImg() + "')");
             }
             
             stmt.addBatch("UPDATE AccountInfo SET bonus_point = bonus_point + " + bonusPoint + " , money = money - "+ orderPrice + "WHERE login_id = '" + loginId + "'");
