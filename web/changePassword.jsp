@@ -16,6 +16,10 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
+        <%
+            if(userInfo.getLoginId() == null )
+                response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+        %>
         <div class="container">
             <h2>Change Password</h2>
             <div class="panel panel-default">

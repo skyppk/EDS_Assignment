@@ -116,7 +116,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Money: $ <%=df.format(userInfo.getMoney())%><span class="caret"></span></a>
                     <ul class="dropdown-menu inverse-dropdown">
                         <li><a class="text-right">Credit: $ <%=df.format(userInfo.getCreditAmount())%></a>
-                        <li><a class="text-right" href="gift.jsp">Bouns Point: <%=df.format(userInfo.getBonusPoints())%></a></li>
+                        <li><a class="text-right" href="gift.jsp">Bonus Point: <%=df.format(userInfo.getBonusPoints())%></a></li>
                     </ul>
                 </li>                
                 <li>

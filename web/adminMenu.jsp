@@ -109,7 +109,7 @@
         <ul class="nav nav-tabs">
             <li><a href="handleCustomer?action=listNew">New Register</a></li>
             <li><a href="handleCustomer?action=list">Manage Customer</a></li>
-            <li><a href="product?action=list">Manage Staff</a></li>
+            <!--<li><a href="product?action=list">Manage Staff</a></li>-->
             <li><a href="product?action=list">Manage Item</a></li>
             <li><a href="redeem?action=manage">Manage Gift</a></li>
             <li><a href="orderHistory?action=manage">Manage Order</a></li>
