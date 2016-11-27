@@ -22,9 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author apple
  */
 @WebServlet(urlPatterns = {"/editItem"})
-public class editItem extends HttpServlet{
+public class editItem extends HttpServlet {
+
     private ItemDB db;
-    
+
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
@@ -46,25 +47,34 @@ public class editItem extends HttpServlet{
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if ("confirm".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             String designerName = request.getParameter("designerName");
             String descriptions = request.getParameter("descriptions");
             double price = Double.parseDouble(request.getParameter("price"));
-            if(db.editItemInfo(id, price, descriptions, designerName));
-                response.sendRedirect("product?action=list");
-            
+            if (db.editItemInfo(id, price, descriptions, designerName));
+            response.sendRedirect("product?action=list");
+
         } else if ("cancel".equalsIgnoreCase(action)) {
             response.sendRedirect("product?action=list");
         } else if ("updateStatus".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             String status = request.getParameter("status");
-            if(db.changeItemStatus(id, status));
+            if (db.changeItemStatus(id, status));
             response.sendRedirect("product?action=list");
-        } 
-        
-        else {
+        } else if ("new".equalsIgnoreCase(action)) {
+            String itemId = request.getParameter("itemId");
+            String itemName = request.getParameter("itemName");
+            String category = request.getParameter("category");
+            String designer = request.getParameter("designer");
+            double price = Double.parseDouble(request.getParameter("price"));
+            String desciptions = request.getParameter("desciptions");
+            String image = request.getParameter("image");
+
+            db.addItemInfo(itemId, itemName, category, designer, price, desciptions, image);
+            response.sendRedirect("product?action=list");
+        } else {
             PrintWriter out = response.getWriter();
             out.println("No such action!!!");
         }
