@@ -35,7 +35,7 @@ public class manageCustomerTag extends SimpleTagSupport {
             PageContext pageContext = (PageContext) getJspContext();
             JspWriter out = pageContext.getOut();
             DecimalFormat df = new DecimalFormat("$ #,##0.0");
-            
+
             out.println("<div class=\"table-responsive\"><table class=\"table\">");
             out.println("<tr>");
             out.println("<th>Login ID</th>");
@@ -52,10 +52,10 @@ public class manageCustomerTag extends SimpleTagSupport {
             out.println("<th>User Status</th>");
             out.println("<th colspan=\"2\">Action</th>");
             out.println("</tr>");
-            if(customers == null){
+            if (customers == null) {
                 System.out.println("fk you");
             }
-            if (customers != null && customers.size()>0) {
+            if (customers != null && customers.size() > 0) {
                 for (UserInfo user : customers) {
                     //out.println(item.getItemName() + "<br>");   
                     out.println("<tr><td style=\"vertical-align:middle;\">");
@@ -83,7 +83,7 @@ public class manageCustomerTag extends SimpleTagSupport {
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     out.println(user.getUserStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
-                    if(user.getUserStatus().equalsIgnoreCase("NEW")){
+                    if (user.getUserStatus().equalsIgnoreCase("NEW")) {
                         out.println("<a href=\"editCustomer?action=newUser&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
@@ -91,7 +91,7 @@ public class manageCustomerTag extends SimpleTagSupport {
                         out.println("<a href=\"editCustomer?action=decline&id=" + user.getId() + "&userStatus=DECLINE\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Decline</button>");
                         out.println("</a>");
-                    }else if(user.getUserStatus().equalsIgnoreCase("ACCEPTED")){
+                    } else if (user.getUserStatus().equalsIgnoreCase("ACCEPTED")) {
                         out.println("<a href=\"handleCustomer?action=getEditCustomer&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Edit</button>");
                         out.println("</a>");
@@ -99,18 +99,17 @@ public class manageCustomerTag extends SimpleTagSupport {
                         out.println("<a href=\"editCustomer?action=updateStatus&id=" + user.getId() + "&userStatus=BLOCK\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Block</button>");
                         out.println("</a>");
-                    }else if(user.getUserStatus().equalsIgnoreCase("BLOCK")){
+                    } else if (user.getUserStatus().equalsIgnoreCase("BLOCK")) {
+                        out.println("</td><td style=\"vertical-align:middle;\">");
                         out.println("<a href=\"editCustomer?action=updateStatus&id=" + user.getId() + "&userStatus=ACCEPTED\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
-                    }else if(user.getUserStatus().equalsIgnoreCase("DECLINE")){
+                    } else if (user.getUserStatus().equalsIgnoreCase("DECLINE")) {
                         out.println("<a href=\"editCustomer?action=newUser&id=" + user.getId() + "\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Accept</button>");
                         out.println("</a>");
                     }
-         
-                    
-                    
+
                     out.println("</td></tr>");
 //                out.println("<div class=\"row\"");
 //                out.println("<div class=\"col-sm-6 col-md-4\">");
@@ -121,9 +120,9 @@ public class manageCustomerTag extends SimpleTagSupport {
 //                out.println("</div>");
 //                out.println("</div>");
                 }
-                
+
                 out.println("</table></div>");
-                
+
             } else {
                 out.println("</table></div><div class=\"panel-body\"><p class=\"text-center\">No New User</p></div>");
             }
@@ -135,5 +134,5 @@ public class manageCustomerTag extends SimpleTagSupport {
     public void setCustomers(ArrayList customers) {
         this.customers = customers;
     }
-    
+
 }

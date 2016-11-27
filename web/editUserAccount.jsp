@@ -44,9 +44,9 @@
 
             Bonus Point : <%=user.getBonusPoints()%>
 
-            Deposit Money : <input type="text" name="money" value="<%=user.getMoney()%>">
+            Deposit Money : <input type="text" name="money" value="0">
 
-            Credit Amount : <input type="text" name="credit" value="<%=user.getCreditAmount()%>">
+            Credit Amount : <input type="text" name="credit" value="0">
 
             <input type="submit" name="action" value="Confirm" onclick="return confirm('Are you sure to continue ?')">   <input type="submit" name="action" value="Cancel" onclick="return confirm('Are you sure to continue ?')">
             </pre>
