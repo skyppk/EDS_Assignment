@@ -224,5 +224,68 @@ public class GiftDB {
         }
         return items;
     }
-
+    
+    public GiftItem getGiftDetails(int id){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        GiftItem item = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM GiftInfo WHERE gift_id = '" + id + "'";
+            System.out.println(preQueryStatement);
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = null;
+            rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                item = new GiftItem(
+                        rs.getInt("gift_id"),
+                        rs.getString("gift_name"),
+                        rs.getString("gift_descriptions"),
+                        rs.getString("gift_img"),
+                        rs.getDouble("needed_point")
+                );
+                
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return item;
+    }
+    
+    public boolean editGiftInfo(int id, String name, String descriptions, double needPoint, String img) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE GiftInfo SET gift_name = ? , gift_descriptions = ? , needed_point = ? , gift_img = ? WHERE gift_id = ? ";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, name);
+            pStmnt.setString(2, descriptions);
+            pStmnt.setDouble(3, needPoint);
+            pStmnt.setString(4, img);
+            pStmnt.setInt(5, id);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 }

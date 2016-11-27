@@ -48,6 +48,13 @@ public class GiftServlet extends HttpServlet {
              case "getHistory":
                  getHistory( request,response);
                  break;
+             case "manage":
+                 manageGift(request,response);
+                 break;
+             case "getEditGift":
+                 getGiftDetail(request,response);
+                 break;
+                 
          }
     }
     private void getHistory(HttpServletRequest request,HttpServletResponse response)
@@ -94,6 +101,29 @@ public class GiftServlet extends HttpServlet {
          response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         out.write(json);
+    }
+    
+    private void getGiftDetail(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+            int id = Integer.parseInt(request.getParameter("id"));
+            System.out.println("test gift id :" + id);
+                GiftItem gift = db.getGiftDetails(id);
+                String targetURL = "editGift.jsp";
+                request.setAttribute("gift", gift);
+                RequestDispatcher rd;
+                rd = getServletContext().getRequestDispatcher("/" + targetURL);
+                rd.forward(request, response);
+    }
+    
+    private void manageGift(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+        ArrayList<GiftItem> gifts = db.pullGiftItemList();
+         request.setAttribute("gifts", gifts);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/manageGift.jsp");
+            rd.forward(request, response);
     }
 
     @Override
