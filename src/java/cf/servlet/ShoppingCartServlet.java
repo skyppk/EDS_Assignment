@@ -54,6 +54,7 @@ public class ShoppingCartServlet extends HttpServlet {
                 doDropItem(request, response);
                 break;
             case "modifyQuantity":
+                doModifyQuantity(request, response);
                 break;
                 
         }
@@ -133,6 +134,40 @@ public class ShoppingCartServlet extends HttpServlet {
             } else {
                 makeResponse(response, false, null);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void doModifyQuantity(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            String itemId = request.getParameter("itemId");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            System.out.println("check itemid" + itemId + "check quantity :" + quantity );
+            HttpSession session = request.getSession();
+            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+            if(quantity <= 0){
+                cart.removeDetails(itemId);
+                
+            }else{
+                cart.setDetails(itemId, quantity);
+            }
+                
+                
+            
+//                ArrayList<OrderDetails> arr = cart.getCart();
+//                for (OrderDetails element : arr) {
+//                    if (element.getItemId().equals(itemId)) {
+//                        element.setDetailsPrice(element.getBuyPrice() * quantity);
+//                        element.setQuantity(quantity);
+//                        break;
+//                    }
+//                }
+//                session.setAttribute("cart", cart);
+                response.sendRedirect("cart.jsp");
+
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }

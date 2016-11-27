@@ -66,17 +66,13 @@ public class cartDisplayTag extends SimpleTagSupport {
                     out.println(df.format(item.getBuyPrice()));
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     if("cart".equalsIgnoreCase(tagType)){
-                        out.println("<div class=\"input-group col-xs-4\">\n" +
-"                        <div class=\"input-group-btn\">\n" +
-"                            <button type=\"button\" class=\"btn btn-default\" id=\"decrease\">\n" +
-"                                <span>-</span>\n" +
-"                            </button>\n" +
-"                        </div>\n" +
-"                        <input type=\"number\" class=\"form-control\" id=\"quantity\" name=\"quantity\" value=\"" +item.getQuantity() + "\" min=\"1\">\n" +
+                        out.println("<form method=\"GET\" action=\"ShoppingCartServlet\"><input type=\"hidden\" name=\"itemId\" value=\"" + item.getItemId() + "\">\n" +
+"                                <div class=\"input-group col-xs-6\">\n" +                       
+"                        <input type=\"number\" class=\"form-control\" id=\"quantity\" name=\"quantity\" value=\"" +item.getQuantity() + "\" min=\"1\">\n" +                       
 "                        <span class=\"input-group-btn\">\n" +
-"                            <button class=\"btn btn-default\" type=\"button\" id=\"increase\">+</button>\n" +
+"                            <input type=\"hidden\" name=\"action\" value=\"modifyQuantity\"><input type=\"submit\" class=\"btn btn-default\" value=\"Change\">\n" +
 "                        </span>\n" +
-"                    </div>");
+"                    </div></form>");
                     }else{
                         out.println(item.getQuantity());
                     }

@@ -33,7 +33,6 @@ public class ShoppingCart {
     public void addCart(OrderDetails orderDetails){
         boolean check = true;
         for(OrderDetails oDs : cart){
-            System.out.println("check od" + oDs.getItemId() + "check :" + orderDetails.getItemId());
             if(oDs.getItemId().equals(orderDetails.getItemId())){
                 oDs.setQuantity(oDs.getQuantity() + orderDetails.getQuantity());
                 oDs.setDetailsPrice(oDs.getDetailsPrice()+ orderDetails.getDetailsPrice());
@@ -41,10 +40,38 @@ public class ShoppingCart {
                 break;
             }
         }
-        System.out.println("check ??????" + check);
         if(check){
-            System.out.println("check ?" + check);
             cart.add(orderDetails);
         }
+    }
+    
+    public boolean setDetails(String itemId, int quantity){
+        boolean check = false;
+        for(OrderDetails oDs : cart){
+            System.out.println("check od" + itemId + "check :" );
+            System.out.println("check id" + oDs.getItemId() + "check :" );
+            if(oDs.getItemId().equals(itemId)){
+                oDs.setQuantity(quantity);
+                oDs.setDetailsPrice(oDs.getBuyPrice() * quantity);
+                System.out.println("check new" + oDs.getItemId() + "check :" );
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
+    
+    public boolean removeDetails(String itemId){
+        boolean check = false;
+        for(OrderDetails oDs : cart){
+            System.out.println("remove od" + oDs.getItemId() + "check :" );
+            if(oDs.getItemId().equals(itemId)){
+                cart.remove(oDs);
+                System.out.println("reomve new" + oDs.getItemId() + "check :" );
+                check = true;
+                break;
+            }
+        }
+        return check;
     }
 }

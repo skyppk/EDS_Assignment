@@ -16,17 +16,9 @@
         <%@include file="menu.jsp" %>
         <script>
             $(function () {
-                $('#increase').click(function () {
-                    var num = parseInt($('#quantity').val());
-                    $('#quantity').val(num + 1);
-                });
-                $('#decrease').click(function () {
-                    var num = parseInt($('#quantity').val());
-                    if (num > 1) {
-                        $('#quantity').val(num - 1);
-                    }
-                });
+                
             });
+            
             function dropItem(id, element) {
 
                 row = element.parent().parent();
@@ -54,6 +46,26 @@
                 });
                 $('#totalValue').text('$ ' + price);
             }
+//            function modifyQuantity(id, element){
+//                row = element.parent().parent();
+//                $.ajax({
+//                type: "POST",
+//                        url: "ShoppingCartServlet",
+//                        data: {
+//                            action: 'modifyQuantity',
+//                            itemId: id,
+//                            quantity: $('#quantity').val()
+//                        },
+//                        success: function (data) {
+////                            if (data.status)
+////                                row.fadeOut(500).remove();
+////                            else
+////                                alert('Unable to modify quantity !');
+//                                updateTotal();
+//                        },
+//                        dataType: 'json'
+//                });
+//            }
         </script>
         <div class="container">
             <h2>Shopping Cart</h2>
