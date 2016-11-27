@@ -358,6 +358,39 @@ public class OrderDB {
         return isSuccess;
     }
     
+    public boolean updateDeliveryDate(String userId, String order, String date, String time) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE OrderInfo SET delivery_date = ?, delivery_time = ? WHERE login_id = ? AND order_id = ?;";
+            
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, date);
+            pStmnt.setString(2, time);
+            pStmnt.setString(3, userId);
+            pStmnt.setString(4, order);
+            System.out.println(preQueryStatement);
+             System.out.println(pStmnt);
+            ResultSet rs = null;
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
 //    public boolean deleteOrderById(String id,String orderId) {
 //        Connection cnnct = null;
 //        PreparedStatement pStmnt = null;

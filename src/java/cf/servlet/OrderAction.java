@@ -84,6 +84,16 @@ public class OrderAction extends HttpServlet {
                 request.setAttribute("order", o);
                 rd = getServletContext().getRequestDispatcher("/orderDetail.jsp");
                 rd.forward(request, response);
+            } else if ("changeDate".equalsIgnoreCase(action)) {
+                String date = request.getParameter("date");
+                String time = request.getParameter("time");
+                String message = null;
+                if (db.updateDeliveryDate(id, order, date, time)) {
+                    message = "Delivery date changed to " + date + " " + time;    
+                } else {
+                    message = "Cannot change delivery date.";
+                }
+                response.sendRedirect("orderHistory?action=now&id=" + id + "&message=" + message);
             }
         } catch (Exception ex) {
             rd = getServletContext().getRequestDispatcher("/error.jsp");

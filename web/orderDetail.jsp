@@ -18,6 +18,10 @@
     </head>
     <body>
         <%@include file="menu.jsp" %>
+        <%
+            if(userInfo.getLoginId() == null )
+                response.sendRedirect("error.jsp?msg=You have not permission to visit this page !");
+        %>
         <div class="container">
             <h2>Order Details (<%=order.getOrderId()%>)<small class="pull-right"><a href="javascript:history.back()" class="btn btn-default">Back</a></small></h2>
             <div class="panel panel-default">
