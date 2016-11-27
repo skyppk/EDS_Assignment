@@ -88,7 +88,7 @@
                 </form>
             </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
 
@@ -112,7 +112,13 @@
                                                 <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
-                <li><a href="gift.jsp">Bonus Point: <%=df.format(userInfo.getBonusPoints())%></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Money: $ <%=df.format(userInfo.getMoney())%><span class="caret"></span></a>
+                    <ul class="dropdown-menu inverse-dropdown">
+                        <li><a class="text-right">Credit: $ <%=df.format(userInfo.getCreditAmount())%></a>
+                        <li><a class="text-right" href="gift.jsp">Bouns Point: <%=df.format(userInfo.getBonusPoints())%></a></li>
+                    </ul>
+                </li>                
                 <li>
                     <form method="post" action="login" class="navbar-form">
                         <input type="hidden" name="action" value="logout">
@@ -148,7 +154,7 @@
 <div style="margin-top:10px"></div>
 
 <script>
-    $('#selection li a').click(function(){
+    $('#selection li a').click(function () {
         $('#search_concept').text($(this).text());
         $('#action').val($(this).text());
     });
