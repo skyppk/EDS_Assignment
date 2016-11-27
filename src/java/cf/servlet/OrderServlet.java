@@ -79,9 +79,11 @@ private UserDB userDb;
                 );
                 if(status){
                             UserInfo user = new UserInfo();
+                            ShoppingCart sc = new ShoppingCart();
                             user = userDb.getUserInfo(info.getLoginId(), info.getPassword());
                             session.setAttribute("accountType", user.getAccountType());
                             session.setAttribute("userInfo", user);
+                            session.setAttribute("cart", sc);
                     makeResponse(response,true,null);
                 }
                     
