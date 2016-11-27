@@ -73,6 +73,7 @@
                             <th>Order ID</th>
                             <th>Order Date</th>
                             <th>Price</th>
+                            <th>Delivery Type</th>
                             <th>Delivery Date</th>
                             <th>Address</th>
                             <th>Change Delivery Date</th>
@@ -83,10 +84,17 @@
                             <td><%=order.getOrderId()%></td>
                             <td><%=order.getOrderDate()%></td>
                             <td>$ <%=order.getOrderPrice()%></td>
+                            <td><%=order.getDeliveryType()%></td>
+                            <% if (!order.getDeliveryType().equalsIgnoreCase("self-pick")) {%>
                             <td><%=order.getDeliveryDate()%> <%=order.getDeliveryTime()%></td>
                             <td><%=order.getDeliveryAddress()%></td>
                             <td><button class="btn btn-default" id="changeDate" data-toggle="modal" data-target="#myModal" data-date="<%=order.getDeliveryDate()%>" data-time="<%=order.getDeliveryTime()%>" data-order="<%=order.getOrderId()%>" data-user="<%=order.getLoginId()%>">Change Date</button></td>
-                            <% if (order.getOrderPrice() > 10000) {%>
+                            <% } else { %>
+                            <td>Not Required</td>
+                            <td>Not Required</td>
+                            <td>Not Required</td>
+                            <% }
+                                if (order.getOrderPrice() > 10000) {%>
                             <td><button class="btn btn-default" id="Cancel" onclick="location.href = 'orderAction?action=cancel&id=<%=order.getLoginId()%>&order=<%=order.getOrderId()%>'">Cancel</button></td>
                             <% } else {%>
                             <td>Not Allow</td>
@@ -131,7 +139,7 @@
             if (mm < 10) {
                 mm = '0' + mm
             }
-            today = yyyy+ '-' + mm + '-' + dd;
+            today = yyyy + '-' + mm + '-' + dd;
 
             $('#date').attr('min', today);
 

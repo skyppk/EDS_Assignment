@@ -116,12 +116,12 @@ public class cartDisplayTag extends SimpleTagSupport {
                     
                     out.println("<div id=\"deliveryAddGroup\" class=\"form-group\">");
                     out.println("<label for=\"address\">Delivery address</label>");
-                    out.println("<input name=\"address\" type=\"address\" class=\"form-control\" id=\"address\">");
+                    out.println("<input name=\"address\" type=\"address\" class=\"form-control\" id=\"address\" required>");
                     out.println("</div>");
                     
                     out.println("<div id=\"deliveryDateGroup\" class=\"form-group\">");
                     out.println("<label for=\"date\">Delivery Date</label>");
-                    out.println("<input name=\"date\" type=\"date\" class=\"form-control\" id=\"date\">");
+                    out.println("<input name=\"date\" type=\"date\" class=\"form-control\" id=\"date\" required>");
                     out.println("</div>");
                     
                     out.println("<div id=\"deliveryTimeGroup\" class=\"form-group\">");
