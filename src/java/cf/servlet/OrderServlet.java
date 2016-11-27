@@ -98,7 +98,12 @@ private UserDB userDb;
     }
     private double getBonus(double price){
         System.out.println("bonus points?" + price);
-        return (price > 2000 ? price * (5/100) : 0);
+        if(price > 2000){
+            return price * 0.05;
+        }else{
+            return 0 ;
+        }
+        
     }
      private void makeResponse(HttpServletResponse response, boolean status, String json)
             throws ServletException, IOException {

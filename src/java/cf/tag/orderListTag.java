@@ -74,12 +74,12 @@ public class orderListTag extends SimpleTagSupport {
                     out.println(order.getOrderStatus());
                     out.println("</td><td style=\"vertical-align:middle;\">");
                     
-                    if(order.getOrderStatus().equalsIgnoreCase("Waiting") && order.getDeliveryType().equalsIgnoreCase("DELIVERY")){
+                    if(order.getOrderStatus().equalsIgnoreCase("Waiting") && order.getDeliveryType().equalsIgnoreCase("self-pick")){
                         out.println("<a href=\"orderHistory?action=update&id=" + order.getId() + "&status=ARRIVED\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Arrived</button>");
                         out.println("</a>");
                     
-                    }if(order.getOrderStatus().equalsIgnoreCase("Arrived") && order.getDeliveryType().equalsIgnoreCase("DELIVERY")){
+                    }if(order.getOrderStatus().equalsIgnoreCase("Arrived") && order.getDeliveryType().equalsIgnoreCase("self-pick")){
                         out.println("<a href=\"orderHistory?action=update&id=" + order.getId() + "&status=FINISH\">");
                         out.println("<button type=\"button\" class=\"btn btn-default\" onclick=\"return confirm('Are you sure to continue ?')\">Finish</button>");
                         out.println("</a>");
